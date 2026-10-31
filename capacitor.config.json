@@ -1,6 +1,8 @@
 {
-  "appId": "com.yorehyona.piperlife",
-  "appName": "החיים של פייפר",
+  "appId": "com.yorehyona.mysnakeslife",
+  "appName": "My Snake's Life",
   "webDir": "www",
-  "android": { "backgroundColor": "#E6F5EC" }
+  "android": {
+    "backgroundColor": "#E6F5EC"
+  }
 }

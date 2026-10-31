@@ -204,7 +204,7 @@ textarea{min-height:110px;resize:vertical}
 
 /* Snake switcher */
 .snakes{display:flex;flex-wrap:wrap;gap:8px;padding:2px 2px 6px;margin-top:-8px}
-.snake-chip{display:flex;align-items:center;gap:8px;flex:none;border:3px solid var(--surface);background:var(--surface);border-radius:999px;padding:4px 14px 4px 6px;font-family:var(--display);font-size:1.05rem;box-shadow:var(--shadow)}
+.snake-chip{display:flex;align-items:center;gap:8px;flex:none;border:3px solid var(--surface);background:var(--surface);border-radius:999px;padding-block:4px;padding-inline:6px 14px;font-family:var(--display);font-size:1.05rem;box-shadow:var(--shadow)}
 .snake-chip.on{border-color:var(--leaf);background:#E9F8EE}
 .snake-chip.add{background:rgba(255,255,255,.75);border-style:dashed;border-color:var(--leaf);color:var(--leaf)}
 .avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;display:grid;place-items:center;flex:none;box-shadow:inset 0 0 0 2px rgba(255,255,255,.7)}
@@ -295,7 +295,7 @@ textarea{min-height:110px;resize:vertical}
   radial-gradient(circle at 20% 30%,rgba(160,120,60,.05) 0 2px,transparent 3px) 0 0/28px 28px,
   linear-gradient(160deg,#FFFBEA,#FFF3D2);
   border-radius:8px 18px 18px 8px;box-shadow:0 10px 24px rgba(31,51,40,.25),inset -14px 0 18px -14px rgba(120,80,30,.25);overflow:hidden}
-.page::before{content:"";position:absolute;inset-block:18px;right:10px;width:12px;background:radial-gradient(circle,#D8C49A 0 5px,transparent 6px) 0 0/12px 34px repeat-y}
+.page::before{content:"";position:absolute;inset-block:18px;inset-inline-start:10px;width:12px;background:radial-gradient(circle,#D8C49A 0 5px,transparent 6px) 0 0/12px 34px repeat-y}
 .page-art{position:absolute;inset:0;pointer-events:none;width:100%;height:100%}
 .page-no{position:absolute;bottom:10px;left:0;right:0;text-align:center;font-family:var(--hand);font-size:1.3rem;color:#6B5A3A}
 .photo{position:absolute;z-index:1;background:#fff;padding:6px 6px 4px;box-shadow:0 5px 12px rgba(0,0,0,.2);border:none;cursor:zoom-in;display:block;transform-origin:center}
@@ -309,6 +309,7 @@ textarea{min-height:110px;resize:vertical}
   -webkit-mask:linear-gradient(90deg,transparent 0 2px,#000 2px calc(100% - 2px),transparent 0),conic-gradient(from -45deg at 50% 100%,#000 90deg,transparent 0) 0 0/8px 100%;}
 .album-empty{position:absolute;inset:0;display:grid;place-content:center;padding:30px;font-family:var(--hand);font-size:1.8rem;color:#5A4A30;text-align:center;z-index:1;line-height:1.2}
 .album-empty small{display:block;font-family:var(--body);font-size:1rem;margin-top:10px}
+:root[dir=ltr] .album-nav{flex-direction:row-reverse}
 .album-nav{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .album-nav span{background:var(--surface);border-radius:999px;padding:4px 14px;font-size:.95rem}
 .pg{border:none;color:#fff;background:var(--tangerine);padding:12px 20px;font-family:var(--display);font-size:1.1rem;border-radius:58% 42% 55% 45% / 48% 58% 42% 52%;box-shadow:0 5px 0 rgba(0,0,0,.2)}
@@ -374,7 +375,7 @@ textarea{min-height:110px;resize:vertical}
 <div class="app" dir="rtl">
 <div id="mainView" class="view">
   <header class="hero">
-    <svg viewBox="0 0 160 140" role="img" data-ta="ציור של {N}">
+    <svg viewBox="0 0 160 140" role="img" aria-label="" data-ta="ציור של {N}">
       <!-- coiled body -->
       <ellipse cx="80" cy="122" rx="62" ry="10" fill="rgba(0,0,0,.15)"/>
       <path d="M30 100 C 20 60, 60 40, 95 52 C 130 64, 135 104, 100 112 C 70 119, 48 104, 58 86" fill="none" stroke="var(--scale)" stroke-width="26" stroke-linecap="round"/>
@@ -398,15 +399,15 @@ textarea{min-height:110px;resize:vertical}
       <p data-t="היומן של {N} ושל {K}"></p>
       <div class="bubble" id="greet"></div>
     </div>
-      <div class="hero-tools"><button class="id-btn" id="openId" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3" fill="#fff"/><circle cx="8" cy="11" r="2.6" fill="#2E9A68"/><path d="M4.5 16.5c.8-2 2.2-3 3.5-3s2.7 1 3.5 3" fill="#2E9A68"/><path d="M14 10h5M14 13h4" stroke="#2E9A68" stroke-width="1.8" stroke-linecap="round"/></svg>תעודת זהות</button></div>
+      <div class="hero-tools"><button class="id-btn" id="openId" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3" fill="#fff"/><circle cx="8" cy="11" r="2.6" fill="#2E9A68"/><path d="M4.5 16.5c.8-2 2.2-3 3.5-3s2.7 1 3.5 3" fill="#2E9A68"/><path d="M14 10h5M14 13h4" stroke="#2E9A68" stroke-width="1.8" stroke-linecap="round"/></svg><span data-t="תעודת זהות">תעודת זהות</span></button></div>
   </header>
-  <nav class="snakes" id="snakes" aria-label="הנחשים שלי"></nav>
+  <nav class="snakes" id="snakes" aria-label="הנחשים שלי" data-ta="הנחשים שלי"></nav>
 
-  <section aria-label="מצב עכשיו">
+  <section aria-label="מצב עכשיו" data-ta="מצב עכשיו">
     <div class="status">
-      <div class="stat feed"><span class="lbl">ימים מאז</span><span class="num" id="dFeed">–</span><span class="what">ארוחה</span></div>
-      <div class="stat shed"><span class="lbl">ימים מאז</span><span class="num" id="dShed">–</span><span class="what">השלת עור</span></div>
-      <div class="stat clean"><span class="lbl">ימים מאז</span><span class="num" id="dClean">–</span><span class="what">ניקיון</span></div>
+      <div class="stat feed"><span class="lbl"><span data-t="ימים מאז">ימים מאז</span></span><span class="num" id="dFeed">–</span><span class="what"><span data-t="ארוחה">ארוחה</span></span></div>
+      <div class="stat shed"><span class="lbl"><span data-t="ימים מאז">ימים מאז</span></span><span class="num" id="dShed">–</span><span class="what"><span data-t="השלת עור">השלת עור</span></span></div>
+      <div class="stat clean"><span class="lbl"><span data-t="ימים מאז">ימים מאז</span></span><span class="num" id="dClean">–</span><span class="what"><span data-t="ניקיון">ניקיון</span></span></div>
     </div>
   </section>
   <div class="hint" id="hint"></div>
@@ -415,71 +416,71 @@ textarea{min-height:110px;resize:vertical}
     <div class="tip-body">
       <div class="tip-label" id="tipLabel"></div>
       <p class="tip-text" id="tipText"></p>
-      <div class="tip-actions"><button class="tip-do" id="tipDo">עשיתי את זה!</button><button class="tip-next" id="tipNext">עוד משהו</button></div>
+      <div class="tip-actions"><button class="tip-do" id="tipDo"><span data-t="עשיתי את זה!">עשיתי את זה!</span></button><button class="tip-next" id="tipNext"><span data-t="עוד משהו">עוד משהו</span></button></div>
     </div>
   </section>
 
   <section style="display:flex;flex-direction:column;gap:12px">
-    <h2 class="section-title">מה קרה היום?</h2>
+    <h2 class="section-title"><span data-t="מה קרה היום?">מה קרה היום?</span></h2>
     <div class="actions">
       <button class="act feed" data-open="feed"><svg viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="22" cy="28" rx="15" ry="11" fill="#fff"/><circle cx="12" cy="18" r="6" fill="#fff"/><circle cx="12" cy="18" r="3" fill="#FFB3C7"/><circle cx="9" cy="27" r="2" fill="#1F3328"/><path d="M37 30 C 44 30, 44 40, 38 40" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span data-t="{N} {אכלה|אכל}">אכל</span></button>
       <button class="act shed" data-open="shed"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 38 C 8 20, 22 22, 24 12 C 26 22, 40 20, 40 38" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="3 5"/><path d="M24 4 l2 4 4 1 -4 2 -2 4 -2 -4 -4 -2 4 -1z" fill="#FFE27A"/></svg><span data-t="{N} {השילה|השיל} עור">השלת עור</span></button>
-      <button class="act clean" data-open="clean"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6 C 30 16, 36 22, 36 30 a12 12 0 0 1 -24 0 C 12 22, 18 16, 24 6z" fill="#fff"/><path d="M19 30 a5 5 0 0 0 5 5" stroke="var(--sky)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span>ניקינו את הבית</span></button>
-      <button class="act note" data-open="note"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="7" width="26" height="34" rx="5" fill="#fff"/><path d="M16 17h14M16 24h14M16 31h8" stroke="var(--berry)" stroke-width="3" stroke-linecap="round"/><path d="M33 30 l8 -8 4 4 -8 8 -5 1z" fill="#FFE27A"/></svg><span>יומן ותמונה</span></button>
+      <button class="act clean" data-open="clean"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6 C 30 16, 36 22, 36 30 a12 12 0 0 1 -24 0 C 12 22, 18 16, 24 6z" fill="#fff"/><path d="M19 30 a5 5 0 0 0 5 5" stroke="var(--sky)" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span><span data-t="ניקינו את הבית">ניקינו את הבית</span></span></button>
+      <button class="act note" data-open="note"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="7" width="26" height="34" rx="5" fill="#fff"/><path d="M16 17h14M16 24h14M16 31h8" stroke="var(--berry)" stroke-width="3" stroke-linecap="round"/><path d="M33 30 l8 -8 4 4 -8 8 -5 1z" fill="#FFE27A"/></svg><span><span data-t="יומן ותמונה">יומן ותמונה</span></span></button>
     </div>
-    <button class="album-btn" id="openAlbum"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="10" width="36" height="30" rx="4" fill="#fff"/><rect x="11" y="15" width="26" height="18" rx="2" fill="#8FD06E"/><circle cx="31" cy="20" r="3" fill="#FFD84D"/><path d="M11 33 L19 23 L25 29 L29 25 L37 33Z" fill="#3E9C4A"/><rect x="14" y="6" width="12" height="6" rx="1" fill="#FFE27A" opacity=".9" transform="rotate(-8 20 9)"/></svg><span><b>אלבום התמונות</b><small id="albumCount"></small></span></button>
-    <button class="album-btn cal-btn" id="openCal"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="9" width="36" height="32" rx="6" fill="#fff"/><rect x="6" y="9" width="36" height="9" rx="4" fill="#FFD84D"/><path d="M15 5v8M33 5v8" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="15" cy="26" r="3" fill="#FF7A3D"/><circle cx="24" cy="26" r="3" fill="#8A5CD6"/><circle cx="33" cy="26" r="3" fill="#2F9FD8"/><circle cx="15" cy="34" r="3" fill="#E2457A"/><circle cx="24" cy="34" r="3" fill="#2E9A68"/></svg><span><b>לוח השנה</b><small>מה קרה בכל יום</small></span></button>
+    <button class="album-btn" id="openAlbum"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="10" width="36" height="30" rx="4" fill="#fff"/><rect x="11" y="15" width="26" height="18" rx="2" fill="#8FD06E"/><circle cx="31" cy="20" r="3" fill="#FFD84D"/><path d="M11 33 L19 23 L25 29 L29 25 L37 33Z" fill="#3E9C4A"/><rect x="14" y="6" width="12" height="6" rx="1" fill="#FFE27A" opacity=".9" transform="rotate(-8 20 9)"/></svg><span><b><span data-t="אלבום התמונות">אלבום התמונות</span></b><small id="albumCount"></small></span></button>
+    <button class="album-btn cal-btn" id="openCal"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="9" width="36" height="32" rx="6" fill="#fff"/><rect x="6" y="9" width="36" height="9" rx="4" fill="#FFD84D"/><path d="M15 5v8M33 5v8" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="15" cy="26" r="3" fill="#FF7A3D"/><circle cx="24" cy="26" r="3" fill="#8A5CD6"/><circle cx="33" cy="26" r="3" fill="#2F9FD8"/><circle cx="15" cy="34" r="3" fill="#E2457A"/><circle cx="24" cy="34" r="3" fill="#2E9A68"/></svg><span><b><span data-t="לוח השנה">לוח השנה</span></b><small><span data-t="מה קרה בכל יום">מה קרה בכל יום</span></small></span></button>
   </section>
 
   <section style="display:flex;flex-direction:column;gap:12px">
     <h2 class="section-title" data-t="היומן של {N}">היומן</h2>
-    <div class="filters" role="group" aria-label="סינון">
-      <button aria-pressed="true" data-f="all">הכל</button>
-      <button aria-pressed="false" data-f="feed">ארוחות</button>
-      <button aria-pressed="false" data-f="shed">השלות</button>
-      <button aria-pressed="false" data-f="clean">ניקיון</button>
-      <button aria-pressed="false" data-f="note">יומן</button>
-      <button aria-pressed="false" data-f="bond">זמן ביחד</button>
+    <div class="filters" role="group" aria-label="סינון" data-ta="סינון">
+      <button aria-pressed="true" data-f="all"><span data-t="הכל">הכל</span></button>
+      <button aria-pressed="false" data-f="feed"><span data-t="ארוחות">ארוחות</span></button>
+      <button aria-pressed="false" data-f="shed"><span data-t="השלות">השלות</span></button>
+      <button aria-pressed="false" data-f="clean"><span data-t="ניקיון">ניקיון</span></button>
+      <button aria-pressed="false" data-f="note"><span data-t="יומן">יומן</span></button>
+      <button aria-pressed="false" data-f="bond"><span data-t="זמן ביחד">זמן ביחד</span></button>
     </div>
     <ul class="diary" id="diary"></ul>
   </section>
   <p class="foot" id="foot"></p>
   <section class="backup">
-    <h2 class="section-title">גיבוי</h2>
-    <p>כל מה שנרשם שמור בטלפון הזה. כדאי לשמור גיבוי מדי פעם, למשל בגוגל דרייב או בוואטסאפ לעצמך.</p>
-    <div class="backup-actions"><button id="bkSave">שמור גיבוי</button><label class="bk-load">טען גיבוי<input type="file" id="bkLoad" accept=".json,application/json"></label></div>
+    <h2 class="section-title"><span data-t="גיבוי">גיבוי</span></h2>
+    <p><span data-t="כל מה שנרשם שמור בטלפון הזה. כדאי לשמור גיבוי מדי פעם, למשל בגוגל דרייב או בוואטסאפ לעצמך.">כל מה שנרשם שמור בטלפון הזה. כדאי לשמור גיבוי מדי פעם, למשל בגוגל דרייב או בוואטסאפ לעצמך.</span></p>
+    <div class="backup-actions"><button id="bkSave"><span data-t="שמור גיבוי">שמור גיבוי</span></button><label class="bk-load"><span data-t="טען גיבוי">טען גיבוי</span><input type="file" id="bkLoad" accept=".json,application/json"></label></div>
   </section>
 </div>
 <div id="calView" class="view" hidden>
   <div class="album-head">
-    <button class="back" id="calBack">→ חזרה</button>
-    <h2 class="section-title">לוח השנה</h2>
+    <button class="back" id="calBack"><span data-t="→ חזרה">→ חזרה</span></button>
+    <h2 class="section-title"><span data-t="לוח השנה">לוח השנה</span></h2>
   </div>
   <div class="cal-card" id="calCard"></div>
-  <div class="cal-legend"><span><i style="background:var(--tangerine)"></i>ארוחה</span><span><i style="background:var(--grape)"></i>השלה</span><span><i style="background:var(--sky)"></i>ניקיון</span><span><i style="background:var(--berry)"></i>יומן</span><span><i style="background:var(--leaf)"></i>ביחד</span></div>
+  <div class="cal-legend"><span><i style="background:var(--tangerine)"></i><span data-t="ארוחה">ארוחה</span></span><span><i style="background:var(--grape)"></i><span data-t="השלה">השלה</span></span><span><i style="background:var(--sky)"></i><span data-t="ניקיון">ניקיון</span></span><span><i style="background:var(--berry)"></i><span data-t="יומן">יומן</span></span><span><i style="background:var(--leaf)"></i><span data-t="ביחד">ביחד</span></span></div>
   <section class="cal-day-list"><h3 class="day-title" id="dayTitle"></h3><ul class="diary" id="dayList"></ul></section>
 </div>
 <div id="albumView" class="view" hidden>
   <div class="album-head">
-    <button class="back" id="albumBack">→ חזרה</button>
+    <button class="back" id="albumBack"><span data-t="→ חזרה">→ חזרה</span></button>
     <h2 class="section-title" data-t="אלבום התמונות של {N}">אלבום התמונות</h2>
   </div>
   <div id="albumPage"></div>
   <div class="album-nav" id="albumNav">
-    <button class="pg next" id="pgNext">הבא ←</button>
+    <button class="pg next" id="pgNext"><span data-t="הבא ←">הבא ←</span></button>
     <span id="pgLabel"></span>
-    <button class="pg prev" id="pgPrev">→ הקודם</button>
+    <button class="pg prev" id="pgPrev"><span data-t="→ הקודם">→ הקודם</span></button>
   </div>
 </div>
 </div>
 <div class="lightbox" id="lightbox" dir="rtl" hidden>
   <div class="lb-stage" id="lbStage"><img id="lbImg" alt="" draggable="false"></div>
   <div class="lb-cap" id="lbCap"></div>
-  <div class="lb-zoom"><button type="button" id="lbIn" aria-label="הגדל">+</button><button type="button" id="lbFit">גודל רגיל</button><button type="button" id="lbOut" aria-label="הקטן">−</button></div>
-  <div class="lb-actions"><button class="lb-close" id="lbClose" type="button">סגור</button><button class="lb-del" id="lbDel" type="button">מחק מהאלבום</button></div>
+  <div class="lb-zoom"><button type="button" id="lbIn" aria-label="הגדל" data-ta="הגדל">+</button><button type="button" id="lbFit"><span data-t="גודל רגיל">גודל רגיל</span></button><button type="button" id="lbOut" aria-label="הקטן" data-ta="הקטן">−</button></div>
+  <div class="lb-actions"><button class="lb-close" id="lbClose" type="button"><span data-t="סגור">סגור</span></button><button class="lb-del" id="lbDel" type="button"><span data-t="מחק מהאלבום">מחק מהאלבום</span></button></div>
   <div class="lb-confirm" id="lbConfirm" hidden><div class="lb-confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="lbAsk">
-    <h3 id="lbAsk"></h3><p>התמונה תימחק מהאלבום, ואי אפשר להחזיר אותה.</p>
-    <div class="lb-confirm-actions"><button class="lb-yes" id="lbYes" type="button">כן, למחוק</button><button class="lb-no" id="lbNo" type="button">לא, להשאיר</button></div>
+    <h3 id="lbAsk"></h3><p><span data-t="התמונה תימחק מהאלבום, ואי אפשר להחזיר אותה.">התמונה תימחק מהאלבום, ואי אפשר להחזיר אותה.</span></p>
+    <div class="lb-confirm-actions"><button class="lb-yes" id="lbYes" type="button"><span data-t="כן, למחוק">כן, למחוק</span></button><button class="lb-no" id="lbNo" type="button"><span data-t="לא, להשאיר">לא, להשאיר</span></button></div>
   </div></div>
 </div>
 
@@ -490,25 +491,26 @@ textarea{min-height:110px;resize:vertical}
   <div class="wiz-card" role="dialog" aria-modal="true">
     <div class="wiz-dots" id="wizDots"></div>
     <div class="wiz-body" id="wizBody"></div>
-    <div class="wiz-actions"><button class="wiz-next" id="wizNext" type="button">הבא</button><button class="wiz-skip" id="wizSkip" type="button">דלג</button><button class="wiz-back" id="wizBack" type="button">חזרה</button></div>
+    <div class="wiz-actions"><button class="wiz-next" id="wizNext" type="button"><span data-t="הבא">הבא</span></button><button class="wiz-skip" id="wizSkip" type="button"><span data-t="דלג">דלג</span></button><button class="wiz-back" id="wizBack" type="button"><span data-t="חזרה">חזרה</span></button></div>
   </div>
 </div>
 <div class="idview" id="idView" dir="rtl" hidden>
   <div class="idview-inner">
     <h2 id="idTitle"></h2>
     <div class="idcard" id="idCard"></div>
-    <div class="id-actions"><button id="idEdit" type="button">עריכת פרטים</button><button id="idKid" type="button">הפרטים שלי</button><button id="idClose" type="button" class="primary">סגור</button></div>
-    <button id="idDel" class="id-del" type="button">מחיקת הנחש</button>
-    <div class="id-del-confirm" id="idDelConfirm" hidden><span id="idDelText"></span><button id="idDelYes" type="button">כן, למחוק</button><button id="idDelNo" type="button">לא</button></div>
+    <div class="id-actions"><button id="idEdit" type="button"><span data-t="עריכת פרטים">עריכת פרטים</span></button><button id="idKid" type="button"><span data-t="הפרטים שלי">הפרטים שלי</span></button><button id="idClose" type="button" class="primary"><span data-t="סגור">סגור</span></button></div>
+    <button id="idDel" class="id-del" type="button"><span data-t="מחיקת הנחש">מחיקת הנחש</span></button>
+    <div class="id-del-confirm" id="idDelConfirm" hidden><span id="idDelText"></span><button id="idDelYes" type="button"><span data-t="כן, למחוק">כן, למחוק</span></button><button id="idDelNo" type="button"><span data-t="לא">לא</span></button></div>
   </div>
 </div>
 <div class="bye" id="bye" dir="rtl" hidden><div class="bye-card" role="dialog" aria-modal="true" aria-labelledby="byeTitle">
   <svg viewBox="0 0 120 90" aria-hidden="true"><path d="M10 80 C 0 60, 40 52, 54 66 C 68 80, 100 72, 92 46" stroke="#C98A4B" stroke-width="16" fill="none" stroke-linecap="round"/><path d="M10 80 C 0 60, 40 52, 54 66 C 68 80, 100 72, 92 46" stroke="#6B4423" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="5 11"/><ellipse cx="90" cy="30" rx="19" ry="15" fill="#C98A4B"/><circle cx="83" cy="27" r="5" fill="#fff"/><circle cx="96" cy="27" r="5" fill="#fff"/><circle cx="83.6" cy="28" r="2.8" fill="#1F3328"/><circle cx="96.6" cy="28" r="2.8" fill="#1F3328"/><path d="M83 37 Q90 42 97 37" stroke="#1F3328" stroke-width="2" fill="none" stroke-linecap="round"/><path class="tongue" d="M108 32 L118 32 M118 32 l4 -4 M118 32 l4 4" stroke="#E2457A" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
-  <h2 id="byeTitle">סיימנו להיום?</h2><p id="byeText"></p>
-  <div class="bye-actions"><button class="bye-yes" id="byeYes">כן, להתראות!</button><button class="bye-no" id="byeNo">עוד קצת!</button></div>
+  <h2 id="byeTitle"><span data-t="סיימנו להיום?">סיימנו להיום?</span></h2><p id="byeText"></p>
+  <div class="bye-actions"><button class="bye-yes" id="byeYes"><span data-t="כן, להתראות!">כן, להתראות!</span></button><button class="bye-no" id="byeNo"><span data-t="עוד קצת!">עוד קצת!</span></button></div>
 </div></div>
 <div class="bye" id="byeDone" dir="rtl" hidden><div class="bye-card"><h2 data-t="להתראות {K}!"></h2><p data-t="{N} {מחכה|מחכה} לך."></p></div></div>
 
+<script src="lang-en.js"></script>
 <script>
 (function(){
 const $=s=>document.querySelector(s);
@@ -529,7 +531,7 @@ const today=()=>ymd(new Date());
 const daysAgo=n=>{const d=new Date();d.setDate(d.getDate()-n);return ymd(d)};
 const parse=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
 const diffDays=s=>Math.round((parse(today())-parse(s))/86400000);
-const nice=s=>{const n=diffDays(s);if(n===0)return 'היום';if(n===1)return 'אתמול';return parse(s).toLocaleDateString('he-IL',{weekday:'long',day:'numeric',month:'long'})};
+const nice=s=>{const n=diffDays(s);if(n===0)return tr('היום');if(n===1)return tr('אתמול');return parse(s).toLocaleDateString(LOC(),{weekday:'long',day:'numeric',month:'long'})};
 
 /* ---------- storage: shared db, falls back to this phone ---------- */
 let entries=[]; let db=null; let assets=null; const LS='piper-life-v1';
@@ -557,21 +559,27 @@ const SPECIES=[
  {k:'boa',n:'בואה',c:['#C7B08A','#7B3B2A','#EFE3C8']},
  {k:'other',n:'נחש אחר',c:['#7FB069','#3E7A3A','#E5F2C8']}];
 const spec=k=>SPECIES.find(x=>x.k===k)||SPECIES[SPECIES.length-1];
-let prof=null;
+let prof=null;let wiz=null;
+const LANG=()=>(wiz&&wiz.d&&wiz.d.lang)||(prof&&prof.lang)||'he';
+const tr=t=>(LANG()==='en'&&window.EN&&typeof t==='string'&&EN[t]!=null)?EN[t]:t;
+const LOC=()=>LANG()==='en'?'en-GB':'he-IL';
+function applyDir(){const d=LANG()==='en'?'ltr':'rtl';const r=document.documentElement;r.dir=d;r.lang=LANG();document.querySelectorAll('[dir]').forEach(e=>{if(e!==r)e.dir=d})}
+const fa=(t,...a)=>fmt(t).replace(/#(\d)/g,(m,i)=>a[i-1]);
 const curSnake=()=>(prof&&prof.snakes.find(x=>x.id===prof.cur))||(prof&&prof.snakes[0])||{id:'none',name:'הנחש',sex:'?',species:'other'};
 const curId=()=>curSnake().id;
 function mine(){const id=curId(),first=prof&&prof.snakes[0]&&prof.snakes[0].id;return entries.filter(e=>(e.snake||first)===id)}
 const snakeFem=s=>(s||curSnake()).sex==='f';
 const kidFem=()=>!!(prof&&prof.kid&&prof.kid.g==='f');
 /* {fem|masc} follows the snake, [boy|girl] follows the child, {N} snake name, {K} child name */
-function fmt(t,s){s=s||curSnake();const kid=(prof&&prof.kid&&prof.kid.name)||'';
-  return t.replace(/\{N\}/g,s.name||'הנחש').replace(/\{K\}/g,kid).replace(/\{([^{}|]*)\|([^{}|]*)\}/g,(m,f,ms)=>snakeFem(s)?f:ms).replace(/\[([^\[\]|]*)\|([^\[\]|]*)\]/g,(m,b,g)=>kidFem()?g:b)}
+function fmt(t,s){t=tr(t);s=s||curSnake();const kid=(prof&&prof.kid&&prof.kid.name)||'';
+  return t.replace(/\{N\}/g,s.name||tr('הנחש')).replace(/\{K\}/g,kid).replace(/\{([^{}|]*)\|([^{}|]*)\}/g,(m,f,ms)=>snakeFem(s)?f:ms).replace(/\[([^\[\]|]*)\|([^\[\]|]*)\]/g,(m,b,g)=>kidFem()?g:b)}
 function saveProf(){idbSet('profile',prof).catch(()=>{})}
-function snakeLabel(s){const sp=spec(s.species);return s.species==='other'&&s.speciesOther?s.speciesOther:sp.n}
+function snakeLabel(s){const sp=spec(s.species);return s.species==='other'&&s.speciesOther?s.speciesOther:tr(sp.n)}
 function applyTexts(){
   document.querySelectorAll('[data-t]').forEach(el=>{el.textContent=fmt(el.dataset.t)});
   document.querySelectorAll('[data-ta]').forEach(el=>el.setAttribute('aria-label',fmt(el.dataset.ta)));
-  document.title=fmt('החיים של {N}');greet();
+  applyDir();document.title=fmt('החיים של {N}');greet();
+  const mt=document.querySelector('meta[name=apple-mobile-web-app-title]');if(mt)mt.content=tr('החיים של הנחש שלי');
   const c=spec(curSnake().species).c,r=document.documentElement.style;r.setProperty('--scale',c[0]);r.setProperty('--scale-dark',c[1]);r.setProperty('--belly',c[2]);
   renderSnakes();
 }
@@ -584,7 +592,7 @@ function renderSnakes(){const nav=$('#snakes');if(!nav||!prof)return;nav.textCon
     b.setAttribute('aria-pressed',s.id===curId());b.append(avatar(s),document.createTextNode(s.name));
     b.onclick=()=>{if(s.id===curId())return;prof.cur=s.id;saveProf();tipIdx=null;tipShown=null;render();toast(fmt('עכשיו ביומן של {N}'))};nav.appendChild(b)});
   const add=document.createElement('button');add.type='button';add.className='snake-chip add';add.innerHTML='<span class="avatar plus">+</span>';
-  add.appendChild(document.createTextNode('נחש חדש'));add.onclick=()=>startWizard('add');nav.appendChild(add)}
+  add.appendChild(document.createTextNode(tr('נחש חדש')));add.onclick=()=>startWizard('add');nav.appendChild(add)}
 
 /* ---------- year → month → day picker for the wizard ---------- */
 function bigDatePicker(val,onPick){
@@ -594,23 +602,23 @@ function bigDatePicker(val,onPick){
     const crumbs=document.createElement('div');crumbs.className='bdp-crumbs';
     const mk=(txt,fn)=>{const b=document.createElement('button');b.type='button';b.textContent=txt;b.onclick=fn;return b};
     if(y!==null)crumbs.appendChild(mk(String(y),()=>{y=null;m=null;draw()}));
-    if(m!==null)crumbs.appendChild(mk(MONTHS[m],()=>{m=null;draw()}));
+    if(m!==null)crumbs.appendChild(mk(MON()[m],()=>{m=null;draw()}));
     if(crumbs.children.length)box.appendChild(crumbs);
     const g=document.createElement('div');
-    if(y===null){const lbl=document.createElement('div');lbl.className='bdp-q';lbl.textContent='באיזו שנה?';box.appendChild(lbl);g.className='bdp-grid y';
+    if(y===null){const lbl=document.createElement('div');lbl.className='bdp-q';lbl.textContent=tr('באיזו שנה?');box.appendChild(lbl);g.className='bdp-grid y';
       for(let yy=t.getFullYear();yy>=t.getFullYear()-11;yy--)g.appendChild(mk(String(yy),()=>{y=yy;draw()}))}
-    else if(m===null){const lbl=document.createElement('div');lbl.className='bdp-q';lbl.textContent='באיזה חודש?';box.appendChild(lbl);g.className='bdp-grid m';
-      MONTHS.forEach((mn,i)=>{const b=mk(mn,()=>{m=i;draw()});if(y===t.getFullYear()&&i>t.getMonth())b.disabled=true;g.appendChild(b)})}
-    else{const lbl=document.createElement('div');lbl.className='bdp-q';lbl.textContent='באיזה יום?';box.appendChild(lbl);
+    else if(m===null){const lbl=document.createElement('div');lbl.className='bdp-q';lbl.textContent=tr('באיזה חודש?');box.appendChild(lbl);g.className='bdp-grid m';
+      MON().forEach((mn,i)=>{const b=mk(mn,()=>{m=i;draw()});if(y===t.getFullYear()&&i>t.getMonth())b.disabled=true;g.appendChild(b)})}
+    else{const lbl=document.createElement('div');lbl.className='bdp-q';lbl.textContent=tr('באיזה יום?');box.appendChild(lbl);
       box.appendChild(monthGrid(y,m,{sel:val,max:today(),onPick:ds=>{val=ds;onPick(ds);draw()}}));return}
     box.appendChild(g)};
   draw();return box}
 
 /* ---------- the welcome questionnaire ---------- */
-let wiz=null;
 const WSTEPS={
+ lang:{q:()=>LANG()==='en'?'Choose a language':'באיזו שפה?',type:'choice',key:'lang',opts:[['he','עברית'],['en','English']],req:1},
  kidName:{q:()=>'שלום! איך קוראים לך?',type:'text',ph:'השם שלי',key:'kidName',req:1},
- kidG:{q:()=>'נעים מאוד, '+wiz.d.kidName+'! בן או בת?',type:'choice',key:'kidG',opts:[['m','אני בן'],['f','אני בת']],req:1,qraw:1},
+ kidG:{q:()=>'נעים מאוד, {K}! בן או בת?',type:'choice',key:'kidG',opts:[['m','אני בן'],['f','אני בת']],req:1,qraw:1},
  name:{q:()=>wiz.mode==='add'?'איך קוראים לנחש החדש?':'איך קוראים לנחש [שלך|שלך]?',type:'text',ph:'שם הנחש',key:'name',req:1},
  species:{q:()=>'מה הסוג של {N}?',type:'species',key:'species',req:1},
  sex:{q:()=>'{N} זכר או נקבה?',type:'choice',key:'sex',opts:[['f','נקבה'],['m','זכר'],['?','עוד לא יודעים']],req:1},
@@ -620,17 +628,18 @@ const WSTEPS={
  photo:{q:()=>'תמונת פרופיל ל{N}',hint:'תמונה יפה של {N} לתעודת הזהות. אפשר להוסיף גם אחר כך.',type:'photo',key:'photo'}};
 function startWizard(mode,snake){
   const d={};let steps;
-  if(mode==='new'){steps=['kidName','kidG','name','species','sex','hatch','joined','morph','photo']}
+  if(mode==='new'){d.lang=(navigator.language||'').startsWith('he')?'he':'en';if(!(navigator.language||'').startsWith('he'))d.lang='en';steps=['lang','kidName','kidG','name','species','sex','hatch','joined','morph','photo']}
   else if(mode==='add'){steps=['name','species','sex','hatch','joined','morph','photo']}
   else if(mode==='edit'){Object.assign(d,snake);steps=['name','species','sex','hatch','joined','morph','photo']}
-  else if(mode==='kid'){d.kidName=prof.kid.name;d.kidG=prof.kid.g;steps=['kidName','kidG']}
-  else if(mode==='migrate'){Object.assign(d,snake);steps=['kidName','kidG',...['hatch','joined','morph','photo'].filter(k=>!d[k])]}
+  else if(mode==='kid'){d.kidName=prof.kid.name;d.kidG=prof.kid.g;d.lang=prof.lang||'he';steps=['lang','kidName','kidG']}
+  else if(mode==='migrate'){Object.assign(d,snake);d.lang='he';steps=['kidName','kidG',...['hatch','joined','morph','photo'].filter(k=>!d[k])]}
   wiz={mode,steps,i:0,d,snake};$('#wizard').hidden=false;lockScroll();drawWiz()}
-function wizSnake(){const d=wiz.d;return {id:d.id||'x',name:d.name||'הנחש',sex:d.sex||'?',species:d.species||'other'}}
+function wizSnake(){const d=wiz.d;return {id:d.id||'x',name:d.name||tr('הנחש'),sex:d.sex||'?',species:d.species||'other'}}
 function wfmt(t){const save=prof;if(!prof)prof={kid:{},snakes:[]};const kidSave=prof.kid;
   prof.kid={name:wiz.d.kidName||(kidSave&&kidSave.name)||'',g:wiz.d.kidG||(kidSave&&kidSave.g)||'m'};
   const r=fmt(t,wizSnake());prof.kid=kidSave;if(!save)prof=null;return r}
 function drawWiz(){
+  applyDir();
   const st=WSTEPS[wiz.steps[wiz.i]],d=wiz.d,box=$('#wizBody');box.textContent='';
   const dots=$('#wizDots');dots.textContent='';wiz.steps.forEach((_,k)=>{const i=document.createElement('i');if(k<=wiz.i)i.className='on';dots.appendChild(i)});
   const h=document.createElement('h2');h.textContent=wfmt(st.q());box.appendChild(h);
@@ -638,67 +647,69 @@ function drawWiz(){
   if(st.type==='text'){const inp=document.createElement('input');inp.type='text';inp.id='wiz-'+st.key;inp.className='wiz-input';inp.maxLength=30;inp.placeholder=wfmt(st.ph||'');inp.value=d[st.key]||'';
     inp.oninput=()=>{d[st.key]=inp.value.trim();wizCheck()};inp.onkeydown=e=>{if(e.key==='Enter'&&!$('#wizNext').disabled)$('#wizNext').click()};box.appendChild(inp);setTimeout(()=>inp.focus(),50)}
   if(st.type==='choice'){const row=document.createElement('div');row.className='wiz-choices';
-    st.opts.forEach(([v,l])=>{const b=document.createElement('button');b.type='button';b.textContent=l;b.setAttribute('aria-pressed',d[st.key]===v);
+    st.opts.forEach(([v,l])=>{const b=document.createElement('button');b.type='button';b.textContent=tr(l);b.setAttribute('aria-pressed',d[st.key]===v);
       b.onclick=()=>{d[st.key]=v;drawWiz();setTimeout(()=>$('#wizNext').click(),220)};row.appendChild(b)});box.appendChild(row)}
   if(st.type==='species'){const g=document.createElement('div');g.className='wiz-species';
     SPECIES.forEach(sp=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-pressed',d.species===sp.k);
       const sw=document.createElement('span');sw.className='sw';sw.style.background=`repeating-linear-gradient(135deg,${sp.c[0]} 0 12px,${sp.c[1]} 12px 18px)`;
-      b.append(sw,document.createTextNode(sp.n));b.onclick=()=>{d.species=sp.k;drawWiz()};g.appendChild(b)});box.appendChild(g);
-    if(d.species==='other'){const inp=document.createElement('input');inp.type='text';inp.id='wiz-other';inp.className='wiz-input';inp.placeholder='איזה נחש?';inp.value=d.speciesOther||'';inp.oninput=()=>{d.speciesOther=inp.value.trim()};box.appendChild(inp)}}
+      b.append(sw,document.createTextNode(tr(sp.n)));b.onclick=()=>{d.species=sp.k;drawWiz()};g.appendChild(b)});box.appendChild(g);
+    if(d.species==='other'){const inp=document.createElement('input');inp.type='text';inp.id='wiz-other';inp.className='wiz-input';inp.placeholder=tr('איזה נחש?');inp.value=d.speciesOther||'';inp.oninput=()=>{d.speciesOther=inp.value.trim()};box.appendChild(inp)}}
   if(st.type==='date'){const shown=document.createElement('div');shown.className='wiz-date';
-    const upd=()=>{shown.textContent=d[st.key]?longDate(d[st.key]):'עוד לא נבחר תאריך'};upd();
-    if(st.today){const b=document.createElement('button');b.type='button';b.className='wiz-today';b.textContent='היום!';b.onclick=()=>{d[st.key]=today();upd();wizCheck();setTimeout(()=>$('#wizNext').click(),200)};box.appendChild(b)}
+    const upd=()=>{shown.textContent=d[st.key]?longDate(d[st.key]):tr('עוד לא נבחר תאריך')};upd();
+    if(st.today){const b=document.createElement('button');b.type='button';b.className='wiz-today';b.textContent=tr('היום!');b.onclick=()=>{d[st.key]=today();upd();wizCheck();setTimeout(()=>$('#wizNext').click(),200)};box.appendChild(b)}
     box.append(shown,bigDatePicker(d[st.key],ds=>{d[st.key]=ds;upd();wizCheck()}))}
   if(st.type==='photo'){const prev=document.createElement('img');prev.className='wiz-photo';prev.alt='';prev.hidden=!d.photo;if(d.photo)prev.src=photoSrc(d.photo);
     const row=document.createElement('div');row.className='photo-row';
-    const mk=(label,cap)=>{const lab=document.createElement('div');lab.className='photo-pick';const t=document.createElement('span');t.textContent=label;
-      const inp=document.createElement('input');inp.type='file';inp.accept='image/*';if(cap)inp.setAttribute('capture','environment');inp.className='photo-input';inp.setAttribute('aria-label',label);
+    const mk=(label,cap)=>{const lab=document.createElement('div');lab.className='photo-pick';const t=document.createElement('span');t.textContent=tr(label);
+      const inp=document.createElement('input');inp.type='file';inp.accept='image/*';if(cap)inp.setAttribute('capture','environment');inp.className='photo-input';inp.setAttribute('aria-label',tr(label));
       inp.onchange=async()=>{const f=inp.files&&inp.files[0];if(!f)return;try{d.photo=await toDataURL(await shrink(f,700,.82));prev.src=d.photo;prev.hidden=false}catch(e){toast('לא הצלחתי לפתוח את התמונה')}};
       lab.append(t,inp);return lab};
     row.append(mk('צלם עכשיו',true),mk('בחר מהגלריה',false));box.append(prev,row)}
   $('#wizBack').hidden=wiz.i===0&&wiz.mode==='new';
-  $('#wizBack').textContent=wiz.i===0?'ביטול':'חזרה';
+  $('#wizBack').textContent=tr(wiz.i===0?'ביטול':'חזרה');
   $('#wizSkip').hidden=!!st.req;
-  $('#wizNext').textContent=wiz.i===wiz.steps.length-1?'סיימתי!':'הבא';
+  $('#wizNext').textContent=tr(wiz.i===wiz.steps.length-1?'סיימתי!':'הבא');$('#wizSkip').textContent=tr('דלג');
   wizCheck();
 }
 function wizCheck(){const st=WSTEPS[wiz.steps[wiz.i]];$('#wizNext').disabled=!!st.req&&!wiz.d[st.key]}
 $('#wizNext').onclick=()=>{if(wiz.i<wiz.steps.length-1){wiz.i++;drawWiz()}else finishWizard()};
 $('#wizSkip').onclick=()=>{const st=WSTEPS[wiz.steps[wiz.i]];if(!st.today||!wiz.d[st.key])delete wiz.d[st.key];$('#wizNext').click()};
 $('#wizBack').onclick=()=>{if(wiz.i>0){wiz.i--;drawWiz()}else if(wiz.mode!=='new'&&wiz.mode!=='migrate'){closeWizard()}else if(wiz.mode==='migrate'){closeWizard()}};
-function closeWizard(){$('#wizard').hidden=true;unlockScroll();wiz=null}
+function closeWizard(){$('#wizard').hidden=true;unlockScroll();wiz=null;applyDir()}
 function finishWizard(){
   const d=wiz.d,mode=wiz.mode;
   const fields=['name','species','speciesOther','sex','hatch','joined','morph','photo'];
   const pickS=src=>{const o={};fields.forEach(f=>{if(src[f])o[f]=src[f]});return o};
-  if(mode==='new'){const id='s'+Date.now().toString(36);prof={kid:{name:d.kidName,g:d.kidG},snakes:[{id,...pickS(d)}],cur:id}}
+  if(mode==='new'){const id='s'+Date.now().toString(36);prof={lang:d.lang||'he',kid:{name:d.kidName,g:d.kidG},snakes:[{id,...pickS(d)}],cur:id}}
   else if(mode==='add'){const id='s'+Date.now().toString(36);prof.snakes.push({id,...pickS(d)});prof.cur=id}
   else if(mode==='edit'){const s=prof.snakes.find(x=>x.id===d.id);fields.forEach(f=>{if(d[f])s[f]=d[f];else delete s[f]})}
-  else if(mode==='kid'){prof.kid={name:d.kidName,g:d.kidG}}
-  else if(mode==='migrate'){prof.kid={name:d.kidName,g:d.kidG};const s=prof.snakes[0];Object.assign(s,pickS(d))}
+  else if(mode==='kid'){prof.kid={name:d.kidName,g:d.kidG};prof.lang=d.lang||'he';tipIdx=null}
+  else if(mode==='migrate'){prof.lang='he';prof.kid={name:d.kidName,g:d.kidG};const s=prof.snakes[0];Object.assign(s,pickS(d))}
   saveProf();closeWizard();tipShown=null;render();
   if(mode==='new'||mode==='add'||mode==='migrate'){openIdCard(true)}else toast('נשמר!')}
 
 /* ---------- the ID card ---------- */
-function ageText(ds){const a=parse(ds),t=parse(today());let m=(t.getFullYear()-a.getFullYear())*12+t.getMonth()-a.getMonth();if(t.getDate()<a.getDate())m--;
+function ageText(ds){if(LANG()==='en')return ageEn(ds);const a=parse(ds),t=parse(today());let m=(t.getFullYear()-a.getFullYear())*12+t.getMonth()-a.getMonth();if(t.getDate()<a.getDate())m--;
   if(m<1){const d=diffDays(ds);return d===1?'יום אחד':d+' ימים'}if(m<12)return m===1?'חודש אחד':m+' חודשים';const y=Math.floor(m/12),r=m%12;
   return (y===1?'שנה':y===2?'שנתיים':y+' שנים')+(r?' ו־'+(r===1?'חודש':r+' חודשים'):'')}
+function ageEn(ds){const a=parse(ds),t=parse(today());let m=(t.getFullYear()-a.getFullYear())*12+t.getMonth()-a.getMonth();if(t.getDate()<a.getDate())m--;
+  const pl=(n,w)=>n+' '+w+(n===1?'':'s');if(m<1)return pl(diffDays(ds),'day');if(m<12)return pl(m,'month');const y=Math.floor(m/12),r=m%12;return pl(y,'year')+(r?' and '+pl(r,'month'):'')}
 function idNumber(s){let h=0;for(const c of s.id+s.name)h=(h*131+c.charCodeAt(0))%9000000;return String(1000000+h)}
 function openIdCard(fresh){
   const s=curSnake(),c=$('#idCard');c.textContent='';
-  const head=document.createElement('div');head.className='idc-head';head.innerHTML='<span>תעודת זהות</span><small>מדינת הג׳ונגל · מחלקת הנחשים</small>';
+  const head=document.createElement('div');head.className='idc-head';const hs=document.createElement('span');hs.textContent=tr('תעודת זהות');const hm=document.createElement('small');hm.textContent=tr('מדינת הג׳ונגל · מחלקת הנחשים');head.append(hs,hm);
   const body=document.createElement('div');body.className='idc-body';
   const pic=document.createElement('div');pic.className='idc-pic';pic.appendChild(avatar(s,true));
   const rows=document.createElement('dl');rows.className='idc-rows';
-  const row=(k,v)=>{if(!v)return;const dt=document.createElement('dt');dt.textContent=k;const dd=document.createElement('dd');dd.textContent=v;rows.append(dt,dd)};
-  row('שם',s.name);row('סוג',snakeLabel(s));row('מין',s.sex==='f'?'נקבה':s.sex==='m'?'זכר':'עוד לא יודעים');
-  if(s.hatch)row('תאריך בקיעה',s.hatch.split('-').reverse().join('.')+' (גיל '+ageText(s.hatch)+')');
-  if(s.joined)row('הגיע'+(s.sex==='f'?'ה':'')+' הביתה',s.joined.split('-').reverse().join('.')+(diffDays(s.joined)>0?' (כבר '+ageText(s.joined)+' במשפחה)':' (היום!)'));
-  row('מופע',s.morph);row(kidFem()?'הבעלים':'הבעלים',prof.kid.name);
+  const row=(k,v)=>{if(!v)return;const dt=document.createElement('dt');dt.textContent=tr(k);const dd=document.createElement('dd');dd.textContent=v;rows.append(dt,dd)};
+  row('שם',s.name);row('סוג',snakeLabel(s));row('מין',tr(s.sex==='f'?'נקבה':s.sex==='m'?'זכר':'עוד לא יודעים'));
+  if(s.hatch)row('תאריך בקיעה',fa('#1 (גיל #2)',s.hatch.split('-').reverse().join('.'),ageText(s.hatch)));
+  if(s.joined)row(fmt('{הגיעה|הגיע} הביתה'),diffDays(s.joined)>0?fa('#1 (כבר #2 במשפחה)',s.joined.split('-').reverse().join('.'),ageText(s.joined)):fa('#1 (היום!)',s.joined.split('-').reverse().join('.')));
+  row('מופע',s.morph);row('הבעלים',prof.kid.name);
   body.append(pic,rows);
   const foot=document.createElement('div');foot.className='idc-foot';
-  const num=document.createElement('span');num.className='idc-num';num.textContent='מספר זהות '+idNumber(s);
-  const stamp=document.createElement('span');stamp.className='idc-stamp';stamp.textContent='מאושר ✓';foot.append(num,stamp);
+  const num=document.createElement('span');num.className='idc-num';num.textContent=fa('מספר זהות #1',idNumber(s));
+  const stamp=document.createElement('span');stamp.className='idc-stamp';stamp.textContent=tr('מאושר ✓');foot.append(num,stamp);
   c.append(head,body,foot);
   $('#idTitle').textContent=fresh?fmt('ברוכים הבאים, {N}!'):fmt('תעודת הזהות של {N}');
   $('#idDel').hidden=prof.snakes.length<2;$('#idDelConfirm').hidden=true;
@@ -861,10 +872,10 @@ function currentTip(){
   if(tipIdx===null)tipIdx=(dayIndex()*7)%pool.length;
   return {...pool[tipIdx%pool.length],rest:false};
 }
-function showTip(){const t=currentTip();const key=curId()+t.t;if(key===tipShown)return;tipShown=key;$('#tipText').textContent=fmt(t.t);
+function showTip(){const t=currentTip();const key=LANG()+curId()+t.t;if(key===tipShown)return;tipShown=key;$('#tipText').textContent=fmt(t.t);
   $('#tipLabel').textContent=fmt(t.task?'משימה מ{N}':'{N} {מספרת|מספר}');
-  $('#tipDo').textContent=t.task?'עשיתי את זה!':'הבנתי!';$('#tipDo').disabled=false;$('#tipNext').hidden=!!t.rest;
-  $('#tipNext').textContent='עוד משהו'}
+  $('#tipDo').textContent=tr(t.task?'עשיתי את זה!':'הבנתי!');$('#tipDo').disabled=false;$('#tipNext').hidden=!!t.rest;
+  $('#tipNext').textContent=tr('עוד משהו')}
 $('#tipNext').onclick=()=>{tipIdx=(tipIdx+1)%(TIPS.length+1);showTip()};
 $('#tipDo').onclick=async()=>{const t=currentTip();hearts();
   if(t.rest){toast(fmt('{N} {אומרת|אומר} תודה [שאתה נותן|שאת נותנת] {לה|לו} לנוח'));return}
@@ -890,24 +901,26 @@ function render(){
   if(!mine().length) h='עוד אין כלום ביומן. [לחץ|לחצי] על אחד הכפתורים הצבעוניים כדי לכתוב את הדבר הראשון על {N}.';
   else if(!lf) h='עוד לא רשמנו ארוחה. מתי {N} {אכלה|אכל} בפעם האחרונה?';
   else{const n=diffDays(lf.date);
-    h= n<=6 ? '{N} {אכלה|אכל} לפני '+(n===0?'פחות מיום':n+' ימים')+'. {היא שבעה ומתכרבלת|הוא שבע ומתכרבל} בנחת.'
-     : n<=13 ? 'עברו '+n+' ימים מהארוחה. אולי בקרוב זמן לארוחה הבאה. כדאי לבדוק עם ההורים.'
-     : 'עברו כבר '+n+' ימים מהארוחה. נחשים לפעמים צמים, אבל כדאי לבדוק עם ההורים.'}
-  $('#hint').textContent=fmt(h);
+    h= n===0 ? '{N} {אכלה|אכל} לפני פחות מיום. {היא שבעה ומתכרבלת|הוא שבע ומתכרבל} בנחת.'
+     : n===1 ? '{N} {אכלה|אכל} אתמול. {היא שבעה ומתכרבלת|הוא שבע ומתכרבל} בנחת.'
+     : n<=6 ? '{N} {אכלה|אכל} לפני #1 ימים. {היא שבעה ומתכרבלת|הוא שבע ומתכרבל} בנחת.'
+     : n<=13 ? 'עברו #1 ימים מהארוחה. אולי בקרוב זמן לארוחה הבאה. כדאי לבדוק עם ההורים.'
+     : 'עברו כבר #1 ימים מהארוחה. נחשים לפעמים צמים, אבל כדאי לבדוק עם ההורים.'}
+  $('#hint').textContent=fa(h,lf?diffDays(lf.date):0);
   showTip();
   const eaten=mine().filter(e=>e.kind==='feed'&&e.ate!==false).length;
   updateAlbumCount&&updateAlbumCount();if(!$('#albumView').hidden)renderAlbum();if(!$('#calView').hidden)renderCal();
   const bonds=mine().filter(e=>e.kind==='bond').length;
-  $('#foot').textContent=fmt(bonds?('בילית עם {N} '+bonds+(bonds===1?' פעם':' פעמים')+'. {היא מתרגלת|הוא מתרגל} אליך כל פעם יותר!'):eaten?('עד עכשיו רשמת '+eaten+' ארוחות של {N}. כל הכבוד, {K}!'):'{N} {שמחה|שמח} [שאתה דואג|שאת דואגת] {לה|לו}.');
+  $('#foot').textContent=bonds===1?fmt('בילית עם {N} פעם אחת. {היא מתרגלת|הוא מתרגל} אליך כל פעם יותר!'):bonds?fa('בילית עם {N} #1 פעמים. {היא מתרגלת|הוא מתרגל} אליך כל פעם יותר!',bonds):eaten?fa('עד עכשיו רשמת #1 ארוחות של {N}. כל הכבוד, {K}!',eaten):fmt('{N} {שמחה|שמח} [שאתה דואג|שאת דואגת] {לה|לו}.');
   applyTexts();
 
   const ul=$('#diary');ul.textContent='';
   const list=mine().filter(e=>!(e.kind==='note'&&e.photo&&!e.text)&&(filter==='all'||e.kind===filter)).sort(sortFn);
   if(!list.length){const li=document.createElement('li');li.className='empty';
-    li.textContent=filter==='all'?fmt('היומן ריק. הרשומה הראשונה [שתוסיף|שתוסיפי] תופיע כאן.'):'אין עדיין רשומות מהסוג הזה.';ul.appendChild(li);return}
+    li.textContent=filter==='all'?fmt('היומן ריק. הרשומה הראשונה [שתוסיף|שתוסיפי] תופיע כאן.'):tr('אין עדיין רשומות מהסוג הזה.');ul.appendChild(li);return}
   let lastMonth='';
   for(const e of list){
-    const m=parse(e.date).toLocaleDateString('he-IL',{month:'long',year:'numeric'});
+    const m=parse(e.date).toLocaleDateString(LOC(),{month:'long',year:'numeric'});
     if(m!==lastMonth){lastMonth=m;const mh=document.createElement('li');mh.className='month';mh.textContent=m;ul.appendChild(mh)}
     ul.appendChild(entryEl(e));
   }
@@ -922,24 +935,26 @@ function entryEl(e){
     if(e.text){const p=document.createElement('div');p.className='text';p.textContent=e.text;body.appendChild(p)}
     if(e.photo){const img=document.createElement('img');img.alt=fmt('תמונה של {N}');img.loading='lazy';img.src=photoSrc(e.photo);body.appendChild(img)}
     if(confirmId===e.id){const c=document.createElement('div');c.className='confirm';
-      const s=document.createElement('span');s.textContent='למחוק את זה?';
-      const y=document.createElement('button');y.className='yes';y.textContent='כן, למחוק';y.onclick=async()=>{confirmId=null;try{await store.remove(e.id);toast('נמחק')}catch(err){toast('לא הצלחתי למחוק. נסה שוב.')};render()};
-      const n=document.createElement('button');n.className='no';n.textContent='לא';n.onclick=()=>{confirmId=null;render()};
+      const s=document.createElement('span');s.textContent=tr('למחוק את זה?');
+      const y=document.createElement('button');y.className='yes';y.textContent=tr('כן, למחוק');y.onclick=async()=>{confirmId=null;try{await store.remove(e.id);toast('נמחק')}catch(err){toast('לא הצלחתי למחוק. נסה שוב.')};render()};
+      const n=document.createElement('button');n.className='no';n.textContent=tr('לא');n.onclick=()=>{confirmId=null;render()};
       c.append(s,y,n);body.appendChild(c)}
     const tools=document.createElement('div');tools.style.cssText='display:flex;flex-direction:column;gap:2px;flex:none';
-    if(canEdit(e)){const ed=document.createElement('button');ed.className='del edit';ed.textContent='ערוך';ed.setAttribute('aria-label','ערוך רשומה');ed.onclick=()=>openSheet(e.kind,e);tools.appendChild(ed)}
-    const del=document.createElement('button');del.className='del';del.textContent='מחק';del.setAttribute('aria-label','מחק רשומה');del.onclick=()=>{confirmId=e.id;render()};
+    if(canEdit(e)){const ed=document.createElement('button');ed.className='del edit';ed.textContent=tr('ערוך');ed.setAttribute('aria-label',tr('ערוך רשומה'));ed.onclick=()=>openSheet(e.kind,e);tools.appendChild(ed)}
+    const del=document.createElement('button');del.className='del';del.textContent=tr('מחק');del.setAttribute('aria-label',tr('מחק רשומה'));del.onclick=()=>{confirmId=e.id;render()};
     tools.appendChild(del);li.append(dot,body,tools);return li;
 }
 const canEdit=e=>!!e.created&&Date.now()-e.created<86400000;
 const FEM={'קטן':'קטנה','בינוני':'בינונית','גדול':'גדולה'};
 const sizeWord=(sz,prey)=>prey==='חולדה'?(FEM[sz]||sz):sz;
+function preyPhrase(e){const p=e.prey||'';if(LANG()!=='en')return p+(e.size?' '+sizeWord(e.size,p):'');
+  const pe=tr(p),se=e.size?tr(e.size):'';if(!pe)return se;const w=(se?se+' ':'')+pe;return (/^[aeiou]/i.test(w)?'an ':'a ')+w.toLowerCase().replace(/^(\w)/,c=>c)}
 function describe(e){
-  if(e.kind==='feed'){ if(e.ate===false) return fmt('{N} לא {רצתה|רצה} לאכול')+(e.prey?' ('+e.prey+')':'');
-    return fmt('{N} {אכלה|אכל} ')+(e.prey||'')+(e.size?' '+sizeWord(e.size,e.prey):'') }
-  if(e.kind==='shed') return e.whole===false?'השלת עור בחתיכות':'השלת עור שלמה';
+  if(e.kind==='feed'){ if(e.ate===false) return fmt('{N} לא {רצתה|רצה} לאכול')+(e.prey?' ('+tr(e.prey)+')':'');
+    return fa('{N} {אכלה|אכל} #1',preyPhrase(e)) }
+  if(e.kind==='shed') return tr(e.whole===false?'השלת עור בחתיכות':'השלת עור שלמה');
   if(e.kind==='bond') return fmt('זמן ביחד עם {N}');
-  if(e.kind==='clean') return 'ניקיון: '+((e.tasks&&e.tasks.length)?e.tasks.join(', '):fmt('הבית של {N}'));
+  if(e.kind==='clean') return fa('ניקיון: #1',(e.tasks&&e.tasks.length)?e.tasks.map(tr).join(', '):fmt('הבית של {N}'));
   return fmt('מהיומן של {K}');
 }
 
@@ -947,7 +962,7 @@ function describe(e){
 let form={};
 function choiceRow(key,opts,{big=false,multi=false}={}){
   const wrap=document.createElement('div');wrap.className='choices'+(big?' big':'');
-  opts.forEach(o=>{const [val,label,cls]=Array.isArray(o)?o:[o,o];const b=document.createElement('button');b.type='button';b.textContent=label;if(cls)b.className=cls;
+  opts.forEach(o=>{const [val,label,cls]=Array.isArray(o)?o:[o,o];const b=document.createElement('button');b.type='button';b.textContent=tr(label);if(cls)b.className=cls;
     const on=()=>multi?(form[key]||[]).includes(val):form[key]===val;
     b.setAttribute('aria-pressed',on());
     b.onclick=()=>{ if(multi){const a=form[key]||[];form[key]=a.includes(val)?a.filter(x=>x!==val):[...a,val]} else form[key]=val;
@@ -956,15 +971,18 @@ function choiceRow(key,opts,{big=false,multi=false}={}){
   return wrap;
 }
 function question(text,node,id){const q=document.createElement('div');q.className='q';const l=document.createElement(id?'label':'div');
-  if(id)l.htmlFor=id;else l.className='qt';l.textContent=text;q.append(l,node);return q}
+  if(id)l.htmlFor=id;else l.className='qt';l.textContent=tr(text);q.append(l,node);return q}
 const MONTHS=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
 const WD=['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'],WDL=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
-const longDate=ds=>{const d=parse(ds);return 'יום '+WDL[d.getDay()]+', '+d.getDate()+' ב'+MONTHS[d.getMonth()]+' '+d.getFullYear()};
+const MONTHS_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const WD_EN=['S','M','T','W','T','F','S'],WDL_EN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MON=()=>LANG()==='en'?MONTHS_EN:MONTHS,WDs=()=>LANG()==='en'?WD_EN:WD;
+const longDate=ds=>{const d=parse(ds);return LANG()==='en'?WDL_EN[d.getDay()]+', '+d.getDate()+' '+MONTHS_EN[d.getMonth()]+' '+d.getFullYear():'יום '+WDL[d.getDay()]+', '+d.getDate()+' ב'+MONTHS[d.getMonth()]+' '+d.getFullYear()};
 const calIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3" fill="#fff" stroke="currentColor" stroke-width="2"/><path d="M3 10h18" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="15" r="2" fill="var(--tangerine)"/></svg>';
 /* month grid: Sunday first, right to left */
 function monthGrid(y,m,{sel,max,cell,onPick}){
   const wrap=document.createElement('div');wrap.className='cal-grid';
-  WD.forEach(w=>{const h=document.createElement('div');h.className='cal-wd';h.textContent=w;wrap.appendChild(h)});
+  WDs().forEach(w=>{const h=document.createElement('div');h.className='cal-wd';h.textContent=w;wrap.appendChild(h)});
   const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();
   for(let i=0;i<first;i++)wrap.appendChild(document.createElement('div'));
   for(let d=1;d<=days;d++){const ds=y+'-'+pad(m+1)+'-'+pad(d);const b=document.createElement('button');b.type='button';b.className='cal-day';
@@ -976,9 +994,9 @@ function monthGrid(y,m,{sel,max,cell,onPick}){
   return wrap;
 }
 function monthHeader(y,m,go,canNext){const h=document.createElement('div');h.className='cal-head';
-  const prev=document.createElement('button');prev.type='button';prev.className='cal-arrow';prev.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';prev.setAttribute('aria-label','חודש קודם');prev.onclick=()=>go(-1);
-  const t=document.createElement('div');t.className='cal-title';t.textContent=MONTHS[m]+' '+y;
-  const next=document.createElement('button');next.type='button';next.className='cal-arrow';next.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';next.setAttribute('aria-label','חודש הבא');next.onclick=()=>go(1);next.disabled=!canNext;
+  const prev=document.createElement('button');prev.type='button';prev.className='cal-arrow';const ltr=LANG()==='en';prev.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="'+(ltr?'M15 5l-7 7 7 7':'M9 5l7 7-7 7')+'" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';prev.setAttribute('aria-label',tr('חודש קודם'));prev.onclick=()=>go(-1);
+  const t=document.createElement('div');t.className='cal-title';t.textContent=MON()[m]+' '+y;
+  const next=document.createElement('button');next.type='button';next.className='cal-arrow';next.innerHTML='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="'+(ltr?'M9 5l7 7-7 7':'M15 5l-7 7 7 7')+'" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';next.setAttribute('aria-label',tr('חודש הבא'));next.onclick=()=>go(1);next.disabled=!canNext;
   h.append(prev,t,next);return h}
 function dateQ(text){
   const box=document.createElement('div');box.style.display='flex';box.style.flexDirection='column';box.style.gap='8px';
@@ -1010,12 +1028,12 @@ function openSheet(kind,existing){
   if(existing){form=JSON.parse(JSON.stringify(existing));const n=diffDays(existing.date);form.dq=n<=2?String(n):null;form.tasks=existing.tasks?[...existing.tasks]:undefined}
   else form={kind,date:today(),dq:'0'};
   const s=$('#sheet');s.textContent='';
-  const h=document.createElement('h2');const ic=document.createElement('span');ic.style.cssText='display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:'+COLOR[kind];ic.innerHTML=ICON[kind];h.append(ic,document.createTextNode(fmt(existing?'עריכה: '+TITLE[kind]:TITLE[kind])));s.appendChild(h);
+  const h=document.createElement('h2');const ic=document.createElement('span');ic.style.cssText='display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:'+COLOR[kind];ic.innerHTML=ICON[kind];h.append(ic,document.createTextNode(existing?tr('עריכה: ')+fmt(TITLE[kind]):fmt(TITLE[kind])));s.appendChild(h);
   if(kind==='feed'){
     s.appendChild(dateQ('באיזה יום?'));
     const preyRow=choiceRow('prey',['עכבר','חולדה','אוגר','אפרוח','משהו אחר']);
     const sizeRow=choiceRow('size',['קטן','בינוני','גדול']);
-    const fixSizes=()=>[...sizeRow.children].forEach((b,i)=>{b.textContent=sizeWord(['קטן','בינוני','גדול'][i],form.prey)});
+    const fixSizes=()=>[...sizeRow.children].forEach((b,i)=>{b.textContent=tr(sizeWord(['קטן','בינוני','גדול'][i],form.prey))});
     preyRow.addEventListener('click',()=>setTimeout(fixSizes,0));fixSizes();
     s.appendChild(question(fmt('מה הגשנו {לה|לו}?'),preyRow));
     s.appendChild(question('באיזה גודל?',sizeRow));
@@ -1030,7 +1048,7 @@ function openSheet(kind,existing){
     s.appendChild(question('מה עשינו? (אפשר לבחור כמה)',choiceRow('tasks',['החלפנו מים','ניקינו את הטרריום','החלפנו מצע','ניקינו את המחבוא'],{multi:true})));
   }
   if(kind==='note'||kind==='feed'||kind==='shed'){
-    const ta=document.createElement('textarea');ta.id='f-text';ta.placeholder=kind==='note'?fmt('{N} {הסתתרה|הסתתר} כל היום במחבוא...'):'משהו מיוחד? (לא חובה)';
+    const ta=document.createElement('textarea');ta.id='f-text';ta.placeholder=kind==='note'?fmt('{N} {הסתתרה|הסתתר} כל היום במחבוא...'):tr('משהו מיוחד? (לא חובה)');
     ta.value=form.text||'';ta.oninput=()=>{form.text=ta.value;check()};
     if(kind==='note') s.appendChild(dateQ('באיזה יום?'));
     s.appendChild(question(kind==='note'?'ספר מה ראית:':'עוד משהו לספר?',ta,'f-text'));
@@ -1039,8 +1057,8 @@ function openSheet(kind,existing){
     const box=document.createElement('div');box.style.display='flex';box.style.flexDirection='column';box.style.gap='8px';
     const prev=document.createElement('img');prev.className='photo-preview';prev.hidden=!form.photo;prev.alt='';if(form.photo)prev.src=photoSrc(form.photo);
     const row=document.createElement('div');row.className='photo-row';
-    const mk=(label,cap)=>{const lab=document.createElement('div');lab.className='photo-pick';const t=document.createElement('span');t.textContent=label;
-      const inp=document.createElement('input');inp.type='file';inp.accept='image/*';if(cap)inp.setAttribute('capture','environment');inp.className='photo-input';inp.setAttribute('aria-label',label);
+    const mk=(label,cap)=>{const lab=document.createElement('div');lab.className='photo-pick';const t=document.createElement('span');t.textContent=tr(label);
+      const inp=document.createElement('input');inp.type='file';inp.accept='image/*';if(cap)inp.setAttribute('capture','environment');inp.className='photo-input';inp.setAttribute('aria-label',tr(label));
       inp.onchange=async()=>{const f=inp.files&&inp.files[0];if(!f)return;try{form.photoBlob=await shrink(f);prev.src=URL.createObjectURL(form.photoBlob);prev.hidden=false;toast('התמונה נוספה!')}catch(e){toast('לא הצלחתי לפתוח את התמונה')};check()};
       lab.append(t,inp);return lab};
     row.append(mk('צלם עכשיו',true),mk('בחר מהגלריה',false));
@@ -1048,8 +1066,8 @@ function openSheet(kind,existing){
   }
   const err=document.createElement('div');err.className='err';err.id='f-err';err.hidden=true;s.appendChild(err);
   const act=document.createElement('div');act.className='sheet-actions';
-  saveBtn=document.createElement('button');saveBtn.className='save';saveBtn.textContent='שמור ביומן';saveBtn.onclick=save;
-  const c=document.createElement('button');c.className='cancel';c.textContent='ביטול';c.onclick=closeSheet;
+  saveBtn=document.createElement('button');saveBtn.className='save';saveBtn.textContent=tr('שמור ביומן');saveBtn.onclick=save;
+  const c=document.createElement('button');c.className='cancel';c.textContent=tr('ביטול');c.onclick=closeSheet;
   act.append(saveBtn,c);s.appendChild(act);check();
   $('#scrim').hidden=false;s.hidden=false;s.scrollTop=0;lockScroll();pushLayer('sheet');
 }
@@ -1064,7 +1082,7 @@ const photoSrc=p=>p.startsWith('data:')?p:'/_blob/'+p;
 const toDataURL=b=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(b)});
 
 async function save(){
-  saveBtn.disabled=true;saveBtn.textContent='שומר...';
+  saveBtn.disabled=true;saveBtn.textContent=tr('שומר...');
   const e=editing?{id:editing.id,kind:editing.kind,date:form.date,created:editing.created,edited:Date.now()}
     :{id:'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),kind:form.kind,date:form.date,created:Date.now()};
   if(editing&&editing.photo)e.photo=editing.photo;
@@ -1080,10 +1098,10 @@ async function save(){
     }
     await store.add(e);closeSheet();
     toast(editing?'השינוי נשמר':form.kind==='feed'&&e.ate?fmt('יאמי! {N} {אומרת|אומר} תודה'):(e.kind==='note'&&e.photo&&!e.text)?'התמונה נכנסה לאלבום!':'נשמר ביומן!');
-  }catch(err){const el=$('#f-err');el.hidden=false;el.textContent='לא הצלחתי לשמור. בדוק שיש אינטרנט ונסה שוב.';saveBtn.disabled=false;saveBtn.textContent='שמור ביומן'}
+  }catch(err){const el=$('#f-err');el.hidden=false;el.textContent=tr('לא הצלחתי לשמור. נסה שוב.');saveBtn.disabled=false;saveBtn.textContent=tr('שמור ביומן')}
 }
 
-let tt;function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2400)}
+let tt;function toast(m){const t=$('#toast');t.textContent=fmt(m);t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2400)}
 
 document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openSheet(b.dataset.open));
 document.querySelectorAll('.filters button').forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));render()});
@@ -1096,7 +1114,7 @@ render();
 const PER=6,TAPES=['#FF8FB0','#FFD84D','#7FD3F7','#B9E27A','#C9A6FF','#FFB067'];let albumPg=0;
 const hash=str=>{let h=0;for(const c of str)h=(h*31+c.charCodeAt(0))|0;return Math.abs(h)};
 function photos(){return mine().filter(e=>e.photo).sort(sortFn)}
-function updateAlbumCount(){const n=photos().length;$('#albumCount').textContent=fmt(n?(n===1?'תמונה אחת של {N}':n+' תמונות של {N}'):'כאן יופיעו התמונות של {N}')}
+function updateAlbumCount(){const n=photos().length;$('#albumCount').textContent=n===1?fmt('תמונה אחת של {N}'):n?fa('#1 תמונות של {N}',n):fmt('כאן יופיעו התמונות של {N}')}
 function pageArt(i){let seed=i*97+13;const r=()=>(seed=(seed*9301+49297)%233280)/233280;
   const leaf=(x,y,a,sc,f)=>`<g transform="translate(${x} ${y}) rotate(${a}) scale(${sc})"><path d="M0 0 C10 -14 36 -14 50 0 C36 14 10 14 0 0Z" fill="${f}"/><path d="M3 0 H46" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/></g>`;
   const mon=(x,y,a,sc,f)=>`<g transform="translate(${x} ${y}) rotate(${a}) scale(${sc})"><path d="M0 0 C30 -40 92 -34 104 18 C112 60 70 96 22 92 C-12 88 -22 40 0 0Z" fill="${f}"/><path d="M50 4 L36 30 M78 20 L56 40 M92 52 L64 54 M80 80 L56 66" stroke="#FFF6DA" stroke-width="7" stroke-linecap="round"/></g>`;
@@ -1117,7 +1135,7 @@ function renderAlbum(){
   const host=$('#albumPage');host.textContent='';
   const page=document.createElement('div');page.className='page';page.innerHTML=pageArt(albumPg);
   if(!list.length){const em=document.createElement('div');em.className='album-empty';em.textContent=fmt('האלבום מחכה לתמונה הראשונה של {N}!');
-    const sm=document.createElement('small');sm.textContent='מוסיפים תמונה בכפתור "יומן ותמונה".';em.appendChild(sm);page.appendChild(em)}
+    const sm=document.createElement('small');sm.textContent=tr('מוסיפים תמונה בכפתור "יומן ותמונה".');em.appendChild(sm);page.appendChild(em)}
   const LAY=[[[3,3],[50,6],[6,34],[52,37],[4,65],[48,67]],[[50,2],[5,8],[48,33],[3,39],[50,64],[8,67]],[[8,4],[52,7],[2,35],[50,33],[6,66],[52,63]]];
   const lay=LAY[albumPg%LAY.length];
   const TAPESETS=[[[-8,'r',-12,38],[-8,'l',-12,-36]],[[-9,'c',0,-4]],[[-8,'l',-14,-38],['b','r',-14,-40]],[[30,'l',-24,82],[30,'r',-24,-84]],[[-9,'c',0,5],['b','c',0,-3]]];
@@ -1126,7 +1144,7 @@ function renderAlbum(){
     const w=35+Math.round(r(1)*12),pos=lay[k];
     const left=Math.max(2,Math.min(pos[0]+(r(2)-.5)*5,97-w)),top=pos[1]+(r(3)-.5)*4;
     fig.style.width=w+'%';fig.style.left=left+'%';fig.style.top=top+'%';
-    fig.style.transform=`rotate(${((r(5)-.5)*20).toFixed(1)}deg)`;fig.setAttribute('aria-label','הגדל תמונה');
+    fig.style.transform=`rotate(${((r(5)-.5)*20).toFixed(1)}deg)`;fig.setAttribute('aria-label',tr('הגדל תמונה'));
     TAPESETS[Math.floor(r(7)*TAPESETS.length)].forEach((t,ti)=>{const tp=document.createElement('span');tp.className='tape';
       tp.style.setProperty('--tc',TAPES[(h+ti*3)%TAPES.length]);
       if(t[0]==='b')tp.style.bottom='-8px';else tp.style.top=t[0]+'px';
@@ -1136,12 +1154,12 @@ function renderAlbum(){
     const cap=document.createElement('figcaption');cap.textContent=caption(e);
     fig.append(img,cap);fig.onclick=()=>openLb(e,img.src);
     page.appendChild(fig)});
-  const no=document.createElement('div');no.className='page-no';no.textContent='עמוד '+(albumPg+1)+' מתוך '+pages;page.appendChild(no);
+  const no=document.createElement('div');no.className='page-no';no.textContent=fa('עמוד #1 מתוך #2',albumPg+1,pages);page.appendChild(no);
   host.appendChild(page);
   $('#pgLabel').textContent=(albumPg+1)+' / '+pages;$('#pgPrev').disabled=albumPg===0;$('#pgNext').disabled=albumPg>=pages-1;
   $('#albumNav').hidden=pages<2;
 }
-function caption(e,full){const d=parse(e.date).toLocaleDateString('he-IL',full?{day:'numeric',month:'long',year:'numeric'}:{day:'numeric',month:'numeric',year:'2-digit'});
+function caption(e,full){const d=parse(e.date).toLocaleDateString(LOC(),full?{day:'numeric',month:'long',year:'numeric'}:{day:'numeric',month:'numeric',year:'2-digit'});
   if(!e.text)return d;const t=full||e.text.length<=40?e.text:e.text.slice(0,38)+'…';return d+' · '+t}
 let mainY=0;
 function showAlbum(on){if(on){mainY=scrollY}$('#mainView').hidden=on;$('#albumView').hidden=!on;if(on){renderAlbum();scrollTo(0,0)}else{scrollTo(0,mainY);requestAnimationFrame(()=>scrollTo(0,mainY))}}
@@ -1177,7 +1195,7 @@ $('#lbYes').onclick=async()=>{const e=lbEntry;if(!e)return;try{
     if(e.text||e.kind!=='note'){const c={...e};delete c.photo;await store.add(c)}else await store.remove(e.id);
     if(!db)renderAlbum();closeLayer(doCloseLb);toast('התמונה נמחקה מהאלבום')}catch(x){toast('לא הצלחתי למחוק. נסה שוב.')}};$('#lightbox').addEventListener('click',ev=>{if(ev.target.id==='lightbox')closeLayer(doCloseLb)});
 let tx=null;$('#albumPage').addEventListener('touchstart',ev=>{tx=ev.touches[0].clientX},{passive:true});
-$('#albumPage').addEventListener('touchend',ev=>{if(tx==null)return;const dx=ev.changedTouches[0].clientX-tx;tx=null;const pages=Math.ceil(photos().length/PER);
+$('#albumPage').addEventListener('touchend',ev=>{if(tx==null)return;const dx=(ev.changedTouches[0].clientX-tx)*(LANG()==='en'?-1:1);tx=null;const pages=Math.ceil(photos().length/PER);
   if(dx>60&&albumPg<pages-1){albumPg++;renderAlbum()}else if(dx<-60&&albumPg>0){albumPg--;renderAlbum()}});
 
 /* ---------- the picture frame with ferns and peeking snakes ---------- */
@@ -1251,7 +1269,7 @@ function renderCal(){
       kinds.slice(0,4).forEach(k=>{const i=document.createElement('i');i.style.background=COLOR[k];dots.appendChild(i)});b.appendChild(dots)}}));
   $('#dayTitle').textContent=longDate(calSel);
   const ul=$('#dayList');ul.textContent='';const es=dayEntries(calSel);
-  if(!es.length){const li=document.createElement('li');li.className='empty';li.textContent='ביום הזה לא נרשם כלום.';ul.appendChild(li)}
+  if(!es.length){const li=document.createElement('li');li.className='empty';li.textContent=tr('ביום הזה לא נרשם כלום.');ul.appendChild(li)}
   else es.forEach(e=>ul.appendChild(entryEl(e)));
 }
 function showCal(on){if(on){mainY=scrollY;const d=parse(today());calY=d.getFullYear();calM=d.getMonth();calSel=today()}
@@ -1285,7 +1303,7 @@ const BYE=[
  {h:'סוגרים את היומן?',p:'{N} {מבטיחה|מבטיח} לא לברוח עד [שתחזור|שתחזרי].'}];
 const BYE_YES=['כן, להתראות {N}!','ביי {N}!','נתראה מחר!'],BYE_NO=['עוד קצת!','רגע, נשארים','עוד משימה אחת'];
 const pick=a=>a[Math.floor(Math.random()*a.length)];
-function showBye(){const b=pick(BYE);$('#byeTitle').textContent=fmt(b.h);$('#byeText').textContent=fmt(b.p);$('#byeYes').textContent=fmt(pick(BYE_YES));$('#byeNo').textContent=pick(BYE_NO);$('#bye').hidden=false;lockScroll()}
+function showBye(){const b=pick(BYE);$('#byeTitle').textContent=fmt(b.h);$('#byeText').textContent=fmt(b.p);$('#byeYes').textContent=fmt(pick(BYE_YES));$('#byeNo').textContent=tr(pick(BYE_NO));$('#bye').hidden=false;lockScroll()}
 function hideBye(){$('#bye').hidden=true;unlockScroll()}
 addEventListener('popstate',()=>{
   if(wiz){if(histOK)pushLayer('main');$('#wizBack').click();return}
@@ -1317,14 +1335,14 @@ if(histOK){try{history.replaceState({v:'guard'},'');history.pushState({v:'main'}
 
 /* ---------- backup and restore ---------- */
 $('#bkSave').onclick=async()=>{
-  const d=today(),name='piper-backup-'+d+'.json';
+  const d=today(),name='my-snake-backup-'+d+'.json';
   const json=JSON.stringify({app:'piper-life',version:2,exported:new Date().toISOString(),profile:prof,entries});
   try{
     if(NATIVE&&Plug('Filesystem')&&Plug('Share')){
       const r=await Plug('Filesystem').writeFile({path:name,data:json,directory:'CACHE',encoding:'utf8'});
-      await Plug('Share').share({title:'גיבוי של היומן',text:'גיבוי של היומן מ־'+d,files:[r.uri],dialogTitle:'איפה לשמור את הגיבוי?'});return}
+      await Plug('Share').share({title:tr('גיבוי של היומן'),text:fa('גיבוי של היומן מ־#1',d),files:[r.uri],dialogTitle:tr('איפה לשמור את הגיבוי?')});return}
     const file=new File([json],name,{type:'application/json'});
-    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'גיבוי של היומן'});return}
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:tr('גיבוי של היומן')});return}
     const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=name;document.body.appendChild(a);a.click();a.remove();toast('הגיבוי נשמר בהורדות');
   }catch(e){if(e&&e.name==='AbortError')return;toast('לא הצלחתי לשמור גיבוי. נסה שוב.')}
 };
@@ -1337,7 +1355,7 @@ $('#bkLoad').onchange=async ev=>{
     const fallback=bp&&bp.snakes&&bp.snakes[0]?bp.snakes[0].id:curId();
     const map=new Map(entries.map(e=>[e.id,e]));let n=0;
     for(const e of list){if(e&&e.id&&e.kind&&e.date){if(!e.snake)e.snake=fallback;map.set(e.id,e);n++}}
-    entries=[...map.values()];lsSave();render();toast('נטענו '+n+' רשומות מהגיבוי!');hearts();
+    entries=[...map.values()];lsSave();render();toast(fa('נטענו #1 רשומות מהגיבוי!',n));hearts();
   }catch(e){toast('הקובץ הזה לא נראה כמו גיבוי של היומן')}
 };
 

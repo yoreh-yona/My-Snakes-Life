@@ -1,8 +1,8 @@
 {
-  "name": "piper-life",
+  "name": "my-snakes-life",
   "version": "1.0.0",
   "private": true,
-  "description": "החיים של פייפר — יומן לפיתונית מתכדררת",
+  "description": "My Snake's Life — a snake diary for kids",
   "dependencies": {
     "@capacitor/android": "6.2.1",
     "@capacitor/app": "6.0.3",

@@ -35,6 +35,10 @@ jobs:
           rm -rf $RES/mipmap-anydpi-v26
           cp -r android-icons/* $RES/
           sed -i 's#</manifest>#    <uses-permission android:name="android.permission.CAMERA" />\n</manifest>#' android/app/src/main/AndroidManifest.xml
+          for q in values-iw values-b+he; do
+            mkdir -p $RES/$q
+            printf '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <string name="app_name">החיים של הנחש שלי</string>\n    <string name="title_activity_main">החיים של הנחש שלי</string>\n</resources>\n' > $RES/$q/strings.xml
+          done
 
       - name: Copy the app into the project
         run: npx cap sync android
@@ -52,19 +56,21 @@ jobs:
 
       - name: Name the APK and check its signature
         run: |
-          cp android/app/build/outputs/apk/debug/app-debug.apk piper-life.apk
-          keytool -printcert -jarfile piper-life.apk | grep "Piper Life"
+          cp android/app/build/outputs/apk/debug/app-debug.apk my-snakes-life.apk
+          keytool -printcert -jarfile my-snakes-life.apk | grep "Piper Life"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: piper-life-apk
-          path: piper-life.apk
+          name: my-snakes-life-apk
+          path: my-snakes-life.apk
 
       - name: Publish as a release (easy download from the phone)
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.${{ github.run_number }}
-          name: החיים של פייפר — גרסה 1.${{ github.run_number }}
-          body: להתקנה באנדרואיד הורידו את piper-life.apk ופתחו אותו בטלפון.
-          files: piper-life.apk
+          tag_name: v2.${{ github.run_number }}
+          name: My Snake's Life · החיים של הנחש שלי 2.${{ github.run_number }}
+          body: |
+            Android: download my-snakes-life.apk and open it on the phone.
+            אנדרואיד: מורידים את my-snakes-life.apk ופותחים אותו בטלפון.
+          files: my-snakes-life.apk
           make_latest: true
