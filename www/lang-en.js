@@ -373,5 +373,7 @@ window.EN={
 "הגיבוי נשמר בהורדות": "Backup saved to Downloads",
 "לא הצלחתי לשמור גיבוי. נסה שוב.": "I couldn't save the backup. Please try again.",
 "נטענו #1 רשומות מהגיבוי!": "Loaded #1 entries from the backup!",
-"הקובץ הזה לא נראה כמו גיבוי של היומן": "This file doesn't look like a diary backup"
+"הקובץ הזה לא נראה כמו גיבוי של היומן": "This file doesn't look like a diary backup",
+"יש לי גיבוי? טען אותו": "Have a backup? Load it",
+"נטענו #1 רשומות. עכשיו נשלים את הפרטים.": "Loaded #1 entries. Now let's fill in the details."
 };
