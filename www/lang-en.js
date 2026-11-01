@@ -419,5 +419,16 @@ window.EN={
 "אני והנחשים שלי": "Me and my snakes",
 "השם שלי ושפת האפליקציה": "My name and app language",
 "הוספת נחש חדש": "Add a new snake",
-"בסדר. אפשר להפעיל הודעות בהגדרות, בתפריט.": "OK. You can turn on messages in Settings, in the menu."
+"בסדר. אפשר להפעיל הודעות בהגדרות, בתפריט.": "OK. You can turn on messages in Settings, in the menu.",
+"גיבוי אוטומטי בטלפון": "Automatic backup on this phone",
+"עדכן עכשיו": "Update now",
+"כבוי. כדאי להשאיר אותו פעיל.": "Off. It's best to keep it on.",
+"הגיבוי האוטומטי לא הצליח. נסו \"עדכן עכשיו\".": "The automatic backup failed. Try \"Update now\".",
+"נשמר לאחרונה: #1, #2. הקובץ נמצא בתיקייה Documents/MySnakesLife בטלפון.": "Last saved: #1, #2. The file is in the Documents/MySnakesLife folder on this phone.",
+"הגיבוי יישמר בפעם הבאה שתצאו מהאפליקציה, בתיקייה Documents/MySnakesLife בטלפון.": "The backup will be saved the next time you leave the app, in the Documents/MySnakesLife folder on this phone.",
+"הגיבוי נשמר בטלפון": "Backup saved on this phone",
+"הגיבוי האוטומטי לא הצליח": "The automatic backup failed",
+"הגיע הזמן לשמור גיבוי 💾": "Time to save a backup 💾",
+"כדי שהיומן של {N} יישמר גם אם יקרה משהו לטלפון. כדאי לבקש עזרה מההורים.": "So {N}'s diary stays safe even if something happens to the phone. Ask your parents to help.",
+"תזכורת לגיבוי (פעם בחודש)": "Backup reminder (once a month)"
 };

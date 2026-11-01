@@ -159,6 +159,11 @@ textarea{min-height:110px;resize:vertical}
 .ns-times{display:flex;gap:6px;flex-wrap:wrap}
 .ns-times button{border:2px solid var(--line);background:var(--chip);border-radius:999px;padding:6px 12px;font-variant-numeric:tabular-nums}
 .ns-times button[aria-pressed="true"]{background:var(--leaf);border-color:var(--leaf);color:#fff}
+.auto-bk{border-top:2px dashed var(--line);padding-top:10px;margin-top:4px;display:flex;flex-direction:column;gap:6px}
+.ab-status{margin:0;font-size:.9rem;color:var(--muted)}
+.ab-status.bad{color:var(--berry)}
+#backupSet.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%,40%{box-shadow:0 0 0 4px var(--sun)}100%{box-shadow:none}}
 .ns-test{align-self:flex-start;border:2px dashed var(--leaf);background:none;color:var(--leaf);border-radius:999px;padding:8px 16px;margin-top:6px}
 #nsMore{display:flex;flex-direction:column;gap:4px}
 .backup{background:var(--surface);border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:8px;font-size:.95rem}
@@ -544,13 +549,19 @@ textarea{min-height:110px;resize:vertical}
       <label class="sw-row"><input type="checkbox" id="nTask"><span id="nTaskL"></span></label>
       <label class="sw-row"><input type="checkbox" id="nClean"><span id="nCleanL"></span></label>
       <label class="sw-row"><input type="checkbox" id="nSpecial"><span id="nSpecialL"></span></label>
+      <label class="sw-row"><input type="checkbox" id="nBackup"><span id="nBackupL"></span></label>
       <button type="button" id="nTest" class="ns-test"></button>
     </div>
   </section>
-  <section class="backup">
+  <section class="backup" id="backupSet">
     <h2 class="section-title small"><span data-t="גיבוי">גיבוי</span></h2>
     <p><span data-t="כל מה שנרשם שמור בטלפון הזה. כדאי לשמור גיבוי מדי פעם, למשל בגוגל דרייב או בוואטסאפ לעצמך.">כל מה שנרשם שמור בטלפון הזה. כדאי לשמור גיבוי מדי פעם, למשל בגוגל דרייב או בוואטסאפ לעצמך.</span></p>
     <div class="backup-actions"><button id="bkSave"><span data-t="שמור גיבוי">שמור גיבוי</span></button><label class="bk-load"><span data-t="טען גיבוי">טען גיבוי</span><input type="file" id="bkLoad" accept=".json,application/json"></label></div>
+    <div class="auto-bk" id="autoBk" hidden>
+      <label class="sw-row"><input type="checkbox" id="abOn"><span id="abOnL"></span></label>
+      <p class="ab-status" id="abStatus"></p>
+      <button type="button" class="ns-test" id="abNow"></button>
+    </div>
   </section>
 </div>
 <div id="diaryView" class="view" hidden>
@@ -652,7 +663,8 @@ function lsLoad(){try{return JSON.parse(localStorage.getItem(LS)||'[]')}catch(e)
 function idb(){return new Promise((res,rej)=>{const r=indexedDB.open('piper-life',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
 async function idbGet(k){const d=await idb();return new Promise((res,rej)=>{const q=d.transaction('kv').objectStore('kv').get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)})}
 async function idbSet(k,v){const d=await idb();return new Promise((res,rej)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=()=>res();t.onerror=()=>rej(t.error)})}
-function lsSave(){idbSet('entries',entries).catch(()=>toast('לא הצלחתי לשמור בטלפון. בדוק שיש מקום פנוי.'))}
+let dirty=false;
+function lsSave(){dirty=true;idbSet('entries',entries).catch(()=>toast('לא הצלחתי לשמור בטלפון. בדוק שיש מקום פנוי.'))}
 const store={
   async add(e){ if(!e.snake)e.snake=curId(); if(db){await db.collection('log').doc(e.id).set(e)} else {entries=entries.filter(x=>x.id!==e.id);entries.push(e);lsSave();render()} },
   async remove(id){ if(db){await db.collection('log').doc(id).delete()} else {entries=entries.filter(x=>x.id!==id);lsSave();render()} }
@@ -685,7 +697,7 @@ const kidFem=()=>!!(prof&&prof.kid&&prof.kid.g==='f');
 /* {fem|masc} follows the snake, [boy|girl] follows the child, {N} snake name, {K} child name */
 function fmt(t,s){t=tr(t);s=s||curSnake();const kid=(prof&&prof.kid&&prof.kid.name)||'';
   return t.replace(/\{N\}/g,s.name||tr('הנחש')).replace(/\{K\}/g,kid).replace(/\{([^{}|]*)\|([^{}|]*)\}/g,(m,f,ms)=>snakeFem(s)?f:ms).replace(/\[([^\[\]|]*)\|([^\[\]|]*)\]/g,(m,b,g)=>kidFem()?g:b)}
-function saveProf(){idbSet('profile',prof).catch(()=>{})}
+function saveProf(){dirty=true;idbSet('profile',prof).catch(()=>{})}
 function snakeLabel(s){const sp=spec(s.species);return s.species==='other'&&s.speciesOther?s.speciesOther:tr(sp.n)}
 function applyTexts(){
   document.querySelectorAll('[data-t]').forEach(el=>{el.textContent=fmt(el.dataset.t)});
@@ -1427,7 +1439,7 @@ $('#openDiary').onclick=()=>{showDiary(true);pushLayer('diary')};$('#diaryBack')
 /* ---------- menu and settings ---------- */
 function showSettings(on){if(on&&!$('#mainView').hidden)mainY=scrollY;$('#mainView').hidden=on;$('#settingsView').hidden=!on;
   if(on){renderSettings();scrollTo(0,0)}else{scrollTo(0,mainY);requestAnimationFrame(()=>scrollTo(0,mainY))}}
-function renderSettings(){if(!prof)return;$('#setKidVal').textContent=(prof.kid.name||'')+' · '+(LANG()==='en'?'English':'עברית');
+function renderSettings(){if(!prof)return;renderAutoBk();$('#setKidVal').textContent=(prof.kid.name||'')+' · '+(LANG()==='en'?'English':'עברית');
   const box=$('#setSnakes');box.textContent='';
   prof.snakes.forEach(sn=>{const b=document.createElement('button');b.type='button';b.className='set-row snake-row';
     const l=document.createElement('span');l.className='sr-l';l.appendChild(avatar(sn));const t=document.createElement('span');t.className='sr-t';
@@ -1502,7 +1514,7 @@ if(histOK){try{history.replaceState({v:'guard'},'');history.pushState({v:'main'}
 
 
 /* ---------- gentle notifications (Android app only, all created on the phone) ---------- */
-const NOTIF_DEF={on:true,time:'17:00',feed:true,task:true,clean:false,special:true};
+const NOTIF_DEF={on:true,time:'17:00',feed:true,task:true,clean:false,special:true,backup:true};
 const nset=()=>Object.assign({},NOTIF_DEF,(prof&&prof.notif)||{});
 const LN=()=>NATIVE?Plug('LocalNotifications'):null;
 const FEED_DAYS={bp:[7,12],corn:[7,10],king:[7,10],milk:[7,10],hog:[7,10],boa:[10,14],other:[7,10]};
@@ -1531,6 +1543,9 @@ function notifPlan(){
         if(y>=1&&d.getMonth()===h.getMonth()&&d.getDate()===h.getDate())put(k,{kind:'special',s,title:fs('מזל טוב! היום יום ההולדת של {N} 🎂',s),body:fs('{N} {בת|בן} #1 היום.',s,y)})}}}});
   if(ns.task){let r=0;for(let k=start;k<=6;k++){const wd=parse(day(k)).getDay();if(wd===0||wd===2||wd===4){const s=prof.snakes[(r+k)%prof.snakes.length];r++;
     put(k,{kind:'task',s,title:fs(TASK_TITLES[(k+r)%TASK_TITLES.length],s),body:fs('פתחו את האפליקציה לראות מה {היא מבקשת|הוא מבקש}.',s)})}}}
+  if(ns.backup&&entries.length){const firstDay=entries.reduce((m,e)=>e.date<m?e.date:m,today());const last=prof.lastBk||firstDay;
+    const due=Math.max(start,30-diffDays(last));
+    for(let k=due;k<=DAYS;k++){const d=day(k);if(!out[d]){out[d]={kind:'backup',s:curSnake(),date:d,title:tr('הגיע הזמן לשמור גיבוי 💾'),body:fmt('כדי שהיומן של {N} יישמר גם אם יקרה משהו לטלפון. כדאי לבקש עזרה מההורים.')};break}}}
   return Object.values(out).sort((a,b)=>a.date<b.date?-1:1).map((it,i)=>{const [y,mo,dd]=it.date.split('-').map(Number);
     return {id:1000+i,title:it.title,body:it.body,channelId:'snake',schedule:{at:new Date(y,mo-1,dd,hh,mm),allowWhileIdle:true},extra:{kind:it.kind,snake:it.s.id}}})
 }
@@ -1549,7 +1564,7 @@ function renderNotif(){
   $('#nsMore').hidden=!$('#nOn').checked;$('#nsTimeQ').textContent=tr('באיזו שעה?');
   const tb=$('#nsTimes');tb.textContent='';['16:00','17:00','18:00','19:00','20:00'].forEach(t=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.setAttribute('aria-pressed',ns.time===t);
     b.onclick=()=>{prof.notif={...nset(),time:t};saveProf();renderNotif();reschedule()};tb.appendChild(b)});
-  [['nFeed','feed','תזכורת לארוחה'],['nTask','task','משימות (2 עד 3 בשבוע)'],['nClean','clean','מים וניקיון (פעם בשבוע)'],['nSpecial','special','ימי הולדת וחגיגות']].forEach(([id,k,l])=>{
+  [['nBackup','backup','תזכורת לגיבוי (פעם בחודש)'],['nFeed','feed','תזכורת לארוחה'],['nTask','task','משימות (2 עד 3 בשבוע)'],['nClean','clean','מים וניקיון (פעם בשבוע)'],['nSpecial','special','ימי הולדת וחגיגות']].forEach(([id,k,l])=>{
     $('#'+id).checked=!!ns[k];$('#'+id+'L').textContent=tr(l);$('#'+id).onchange=e=>{prof.notif={...nset(),[k]:e.target.checked};saveProf();reschedule()}});
   $('#nTest').textContent=tr('שלח הודעת ניסיון');
 }
@@ -1565,7 +1580,8 @@ $('#nTest').onclick=async()=>{const L=LN();if(!L)return;if(!await askPermission(
   try{L.addListener('localNotificationActionPerformed',a=>{const ex=(a&&a.notification&&a.notification.extra)||{};
     if(prof&&ex.snake&&prof.snakes.find(x=>x.id===ex.snake)&&ex.snake!==curId()){prof.cur=ex.snake;saveProf();tipShown=null;render()}
     if(ex.kind==='task')setTimeout(()=>{const t=document.querySelector('.tip');if(t)t.scrollIntoView({behavior:'smooth',block:'center'})},400);
-    if(ex.kind==='special')setTimeout(()=>openIdCard(false),400)})}catch(e){}
+    if(ex.kind==='special')setTimeout(()=>openIdCard(false),400);
+    if(ex.kind==='backup')setTimeout(()=>{goTo('settings');setTimeout(()=>{const b=$('#backupSet');b.scrollIntoView({behavior:'smooth',block:'center'});b.classList.add('flash');setTimeout(()=>b.classList.remove('flash'),1700)},500)},400)})}catch(e){}
   const A=Plug('App');if(A)try{A.addListener('resume',()=>reschedule())}catch(e){}})();
 
 /* ---------- load from the phone ---------- */
@@ -1578,20 +1594,47 @@ $('#nTest').onclick=async()=>{const L=LN();if(!L)return;if(!await askPermission(
     entries.forEach(e=>{if(!e.snake)e.snake=id});lsSave();saveProf();
     render();startWizard('migrate',{...prof.snakes[0]});return}
   if(!prof){startWizard('new');return}
-  render();
+  render();setTimeout(()=>autoBackup({daily:true}),8000);
 })();
 
 /* ---------- backup and restore ---------- */
+function backupJson(){return JSON.stringify({app:'piper-life',version:2,exported:new Date().toISOString(),profile:prof,entries})}
+function markShared(){if(!prof)return;prof.lastBk=today();saveProf();reschedule()}
+/* automatic copy on the phone: Documents/MySnakesLife, written when the app goes to the background, at most once a day */
+const AB_DIR='MySnakesLife';
+async function autoBackup(opt){opt=opt||{};const F=NATIVE&&Plug('Filesystem');if(!F||!prof)return;
+  const ab=prof.autoBk||{};if(ab.off&&!opt.now)return;
+  if(!opt.now&&(ab.day===today()||(!dirty&&!opt.daily)))return;
+  if(!entries.length&&!opt.now)return;
+  if(opt.now){try{await F.requestPermissions()}catch(e){}}
+  const json=backupJson();let name=ab.name||'my-snake-backup.json',ok=false,err='';
+  for(const n of [name,'my-snake-backup-'+today()+'.json']){
+    try{await F.writeFile({path:AB_DIR+'/'+n,data:json,directory:'DOCUMENTS',encoding:'utf8',recursive:true});name=n;ok=true;break}catch(e){err=String((e&&e.message)||e)}}
+  prof.autoBk=ok?{...ab,day:today(),at:Date.now(),ok:true,name}:{...ab,ok:false,err};
+  saveProf();if(ok)dirty=false;
+  if(!$('#settingsView').hidden)renderAutoBk();
+  if(opt.now)toast(ok?'הגיבוי נשמר בטלפון':'הגיבוי האוטומטי לא הצליח')}
+function renderAutoBk(){const show=!!(NATIVE&&Plug('Filesystem')&&prof);$('#autoBk').hidden=!show;if(!show)return;
+  const ab=prof.autoBk||{};$('#abOn').checked=!ab.off;$('#abOnL').textContent=tr('גיבוי אוטומטי בטלפון');$('#abNow').textContent=tr('עדכן עכשיו');
+  const st=$('#abStatus');st.classList.toggle('bad',ab.ok===false);
+  if(ab.off)st.textContent=tr('כבוי. כדאי להשאיר אותו פעיל.');
+  else if(ab.ok===false)st.textContent=tr('הגיבוי האוטומטי לא הצליח. נסו "עדכן עכשיו".');
+  else if(ab.at){const d=new Date(ab.at);st.textContent=fa('נשמר לאחרונה: #1, #2. הקובץ נמצא בתיקייה Documents/MySnakesLife בטלפון.',longDate(ymd(d)),pad(d.getHours())+':'+pad(d.getMinutes()))}
+  else st.textContent=tr('הגיבוי יישמר בפעם הבאה שתצאו מהאפליקציה, בתיקייה Documents/MySnakesLife בטלפון.')}
+$('#abOn').onchange=e=>{prof.autoBk={...(prof.autoBk||{}),off:!e.target.checked};saveProf();renderAutoBk();if(e.target.checked)autoBackup({now:true})};
+$('#abNow').onclick=()=>autoBackup({now:true});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')autoBackup()});
+(function(){const A=NATIVE&&Plug('App');if(A)try{A.addListener('pause',()=>autoBackup())}catch(e){}})();
 $('#bkSave').onclick=async()=>{
   const d=today(),name='my-snake-backup-'+d+'.json';
-  const json=JSON.stringify({app:'piper-life',version:2,exported:new Date().toISOString(),profile:prof,entries});
+  const json=backupJson();
   try{
     if(NATIVE&&Plug('Filesystem')&&Plug('Share')){
       const r=await Plug('Filesystem').writeFile({path:name,data:json,directory:'CACHE',encoding:'utf8'});
-      await Plug('Share').share({title:tr('גיבוי של היומן'),text:fa('גיבוי של היומן מ־#1',d),files:[r.uri],dialogTitle:tr('איפה לשמור את הגיבוי?')});return}
+      await Plug('Share').share({title:tr('גיבוי של היומן'),text:fa('גיבוי של היומן מ־#1',d),files:[r.uri],dialogTitle:tr('איפה לשמור את הגיבוי?')});markShared();return}
     const file=new File([json],name,{type:'application/json'});
-    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:tr('גיבוי של היומן')});return}
-    const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=name;document.body.appendChild(a);a.click();a.remove();toast('הגיבוי נשמר בהורדות');
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:tr('גיבוי של היומן')});markShared();return}
+    const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=name;document.body.appendChild(a);a.click();a.remove();markShared();toast('הגיבוי נשמר בהורדות');
   }catch(e){if(e&&e.name==='AbortError')return;toast('לא הצלחתי לשמור גיבוי. נסה שוב.')}
 };
 async function restoreFile(f){
