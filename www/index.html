@@ -302,6 +302,29 @@ textarea{min-height:110px;resize:vertical}
 #idDelYes{background:var(--berry);color:#fff}
 @media (max-width:380px){.idc-body{flex-direction:column;align-items:center}.wiz-species{grid-template-columns:1fr}}
 
+/* Menu */
+.menu-btn{position:fixed;z-index:8;top:calc(env(safe-area-inset-top,0px) + 4px);left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;
+  border:none;padding:7px 16px 7px 14px;border-radius:0 0 18px 18px;background:#8E5A2C;color:#FFF3D2;font-family:var(--display);font-size:1rem;
+  box-shadow:0 4px 0 rgba(0,0,0,.25),inset 0 -3px 0 rgba(0,0,0,.15);background-image:repeating-linear-gradient(100deg,transparent 0 14px,rgba(0,0,0,.08) 14px 16px)}
+.menu-btn svg{width:22px;height:22px}
+.menu-btn:active{transform:translateX(-50%) translateY(2px)}
+.menu-scrim{position:fixed;inset:0;z-index:44;background:rgba(15,40,25,.45)}
+.menu{position:fixed;z-index:45;top:0;bottom:0;inset-inline-start:0;width:min(78vw,300px);background:#FFFBEA;color:#1F3328;display:flex;flex-direction:column;gap:6px;
+  padding:calc(env(safe-area-inset-top,0px) + 18px) 14px calc(env(safe-area-inset-bottom,0px) + 18px);box-shadow:0 0 24px rgba(0,0,0,.3);
+  border-inline-end:6px solid #8E5A2C;animation:slidein .22s ease-out;overflow-y:auto}
+@keyframes slidein{from{transform:translateX(30px);opacity:.3}to{transform:none;opacity:1}}
+.menu-head{display:flex;align-items:center;gap:10px;padding:4px 6px 12px;border-bottom:2px dashed #E3D7B0;margin-bottom:6px}
+.menu-head b{font-family:var(--display);font-weight:400;font-size:1.3rem}
+.menu-item{display:flex;align-items:center;gap:12px;border:none;background:none;border-radius:16px;padding:11px 12px;font-family:var(--display);font-size:1.15rem;color:#1F3328;text-align:start}
+.menu-item svg{width:30px;height:30px;padding:4px;border-radius:10px;color:#fff;flex:none}
+.menu-item:nth-of-type(1) svg{background:var(--leaf)}.menu-item:nth-of-type(2) svg{background:var(--berry)}.menu-item:nth-of-type(3) svg{background:var(--sky)}
+.menu-item:nth-of-type(4) svg{background:var(--tangerine)}.menu-item:nth-of-type(5) svg{background:var(--grape)}.menu-item:nth-of-type(6) svg{background:#8E5A2C}
+.menu-item[aria-current="page"]{background:#EFE6C6}
+.set-rows{display:flex;flex-direction:column;gap:6px}
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border:2px solid var(--line);background:var(--chip);border-radius:16px;padding:12px 14px;font-size:1rem;text-align:start}
+.set-row b{font-weight:400;color:var(--muted);white-space:nowrap}
+.section-title.small{font-size:1.15rem}
+
 /* Album */
 .view{display:flex;flex-direction:column;gap:22px}
 .album-btn{display:flex;align-items:center;gap:14px;border:none;padding:16px 20px;color:#fff;text-align:start;
@@ -405,6 +428,12 @@ textarea{min-height:110px;resize:vertical}
   </svg>
 </div>
 <div class="frame" aria-hidden="true"><div class="wood"></div><svg id="frameArt"></svg></div>
+<button type="button" class="menu-btn" id="menuBtn" aria-label="תפריט" data-ta="תפריט"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><span data-t="תפריט">תפריט</span></button>
+<div class="menu-scrim" id="menuScrim" hidden></div>
+<nav class="menu" id="menu" dir="rtl" hidden aria-label="תפריט" data-ta="תפריט">
+  <div class="menu-head"><span class="menu-snake" id="menuSnake"></span><b id="menuName"></b></div>
+  <button type="button" class="menu-item" data-go="main"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg><span data-t="בית">בית</span></button><button type="button" class="menu-item" data-go="diary"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M6 3h11a2 2 0 012 2v16H8a2 2 0 01-2-2zM9 8h7M9 12h7M9 16h4" stroke="rgba(0,0,0,.35)" stroke-width="1.6"/></svg><span data-t="היומן">היומן</span></button><button type="button" class="menu-item" data-go="cal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M4 6h16v15H4zM4 10h16M8 3v5M16 3v5" stroke="rgba(0,0,0,.35)" stroke-width="1.6"/></svg><span data-t="לוח השנה">לוח השנה</span></button><button type="button" class="menu-item" data-go="album"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M3 6h18v14H3z"/><path d="M5 18l5-6 4 4 2-2 4 4z" fill="rgba(0,0,0,.35)"/></svg><span data-t="אלבום התמונות">אלבום התמונות</span></button><button type="button" class="menu-item" data-go="id"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M3 6h18v13H3z"/><circle cx="8.5" cy="12" r="2.4" fill="rgba(0,0,0,.35)"/><path d="M13 10h5M13 14h4" stroke="rgba(0,0,0,.35)" stroke-width="1.6"/></svg><span data-t="תעודת זהות">תעודת זהות</span></button><button type="button" class="menu-item" data-go="settings"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 8a4 4 0 100 8 4 4 0 000-8z" fill="rgba(0,0,0,.35)"/><path d="M12 2l2 3 3.5-.5.5 3.5 3 2-2 3 .5 3.5-3.5.5-2 3-2-3-3.5-.5.5-3.5-2-3 3-2 .5-3.5L10 5z"/></svg><span data-t="הגדרות">הגדרות</span></button>
+</nav>
 <div class="app" dir="rtl">
 <div id="mainView" class="view">
   <header class="hero">
@@ -476,6 +505,29 @@ textarea{min-height:110px;resize:vertical}
     <button type="button" class="all-diary" id="openDiary"></button>
   </section>
   <p class="foot" id="foot"></p>
+</div>
+<div id="calView" class="view" hidden>
+  <div class="album-head">
+    <button class="back" id="calBack"><span data-t="→ חזרה">→ חזרה</span></button>
+    <h2 class="section-title"><span data-t="לוח השנה">לוח השנה</span></h2>
+  </div>
+  <div class="cal-card" id="calCard"></div>
+  <div class="cal-legend"><span><i style="background:var(--tangerine)"></i><span data-t="ארוחה">ארוחה</span></span><span><i style="background:var(--grape)"></i><span data-t="השלה">השלה</span></span><span><i style="background:var(--sky)"></i><span data-t="ניקיון">ניקיון</span></span><span><i style="background:var(--berry)"></i><span data-t="יומן">יומן</span></span><span><i style="background:var(--leaf)"></i><span data-t="ביחד">ביחד</span></span></div>
+  <section class="cal-day-list"><h3 class="day-title" id="dayTitle"></h3><ul class="diary" id="dayList"></ul></section>
+</div>
+<div id="settingsView" class="view" hidden>
+  <div class="album-head">
+    <button class="back" id="settingsBack"><span data-t="→ חזרה">→ חזרה</span></button>
+    <h2 class="section-title" data-t="הגדרות">הגדרות</h2>
+  </div>
+  <section class="backup">
+    <h2 class="section-title small" data-t="אני והנחשים שלי">אני והנחשים שלי</h2>
+    <div class="set-rows">
+      <button type="button" class="set-row" id="setKid"><span data-t="השם שלי ושפת האפליקציה">השם שלי ושפת האפליקציה</span><b id="setKidVal"></b></button>
+      <button type="button" class="set-row" id="setId"><span data-t="תעודת הזהות של {N}">תעודת הזהות</span><b>›</b></button>
+      <button type="button" class="set-row" id="setAdd"><span data-t="הוספת נחש חדש">הוספת נחש חדש</span><b>+</b></button>
+    </div>
+  </section>
   <section class="backup notif-set" id="notifSet" hidden>
     <h2 class="section-title" id="nsTitle"></h2>
     <label class="sw-row main"><input type="checkbox" id="nOn"><span id="nOnL"></span></label>
@@ -490,19 +542,10 @@ textarea{min-height:110px;resize:vertical}
     </div>
   </section>
   <section class="backup">
-    <h2 class="section-title"><span data-t="גיבוי">גיבוי</span></h2>
+    <h2 class="section-title small"><span data-t="גיבוי">גיבוי</span></h2>
     <p><span data-t="כל מה שנרשם שמור בטלפון הזה. כדאי לשמור גיבוי מדי פעם, למשל בגוגל דרייב או בוואטסאפ לעצמך.">כל מה שנרשם שמור בטלפון הזה. כדאי לשמור גיבוי מדי פעם, למשל בגוגל דרייב או בוואטסאפ לעצמך.</span></p>
     <div class="backup-actions"><button id="bkSave"><span data-t="שמור גיבוי">שמור גיבוי</span></button><label class="bk-load"><span data-t="טען גיבוי">טען גיבוי</span><input type="file" id="bkLoad" accept=".json,application/json"></label></div>
   </section>
-</div>
-<div id="calView" class="view" hidden>
-  <div class="album-head">
-    <button class="back" id="calBack"><span data-t="→ חזרה">→ חזרה</span></button>
-    <h2 class="section-title"><span data-t="לוח השנה">לוח השנה</span></h2>
-  </div>
-  <div class="cal-card" id="calCard"></div>
-  <div class="cal-legend"><span><i style="background:var(--tangerine)"></i><span data-t="ארוחה">ארוחה</span></span><span><i style="background:var(--grape)"></i><span data-t="השלה">השלה</span></span><span><i style="background:var(--sky)"></i><span data-t="ניקיון">ניקיון</span></span><span><i style="background:var(--berry)"></i><span data-t="יומן">יומן</span></span><span><i style="background:var(--leaf)"></i><span data-t="ביחד">ביחד</span></span></div>
-  <section class="cal-day-list"><h3 class="day-title" id="dayTitle"></h3><ul class="diary" id="dayList"></ul></section>
 </div>
 <div id="diaryView" class="view" hidden>
   <div class="album-head">
@@ -981,7 +1024,7 @@ function render(){
   $('#hint').textContent=fa(h,lf?diffDays(lf.date):0);
   showTip();
   const eaten=mine().filter(e=>e.kind==='feed'&&e.ate!==false).length;
-  updateAlbumCount&&updateAlbumCount();if(!$('#albumView').hidden)renderAlbum();if(!$('#calView').hidden)renderCal();
+  updateAlbumCount&&updateAlbumCount();if(!$('#albumView').hidden)renderAlbum();if(!$('#calView').hidden)renderCal();if(!$('#settingsView').hidden)renderSettings();
   const bonds=mine().filter(e=>e.kind==='bond').length;
   $('#foot').textContent=bonds===1?fmt('בילית עם {N} פעם אחת. {היא מתרגלת|הוא מתרגל} אליך כל פעם יותר!'):bonds?fa('בילית עם {N} #1 פעמים. {היא מתרגלת|הוא מתרגל} אליך כל פעם יותר!',bonds):eaten?fa('עד עכשיו רשמת #1 ארוחות של {N}. כל הכבוד, {K}!',eaten):fmt('{N} {שמחה|שמח} [שאתה דואג|שאת דואגת] {לה|לו}.');
   applyTexts();renderNotif();reschedule();
@@ -1257,7 +1300,7 @@ async function addPhotos(files){
 $('#albCam').onchange=ev=>{const f=ev.target.files;addPhotos(f).finally(()=>{ev.target.value=''})};
 $('#albGal').onchange=ev=>{const f=ev.target.files;addPhotos(f).finally(()=>{ev.target.value=''})};
 let mainY=0;
-function showAlbum(on){if(on){mainY=scrollY}$('#mainView').hidden=on;$('#albumView').hidden=!on;if(on){renderAlbum();scrollTo(0,0)}else{scrollTo(0,mainY);requestAnimationFrame(()=>scrollTo(0,mainY))}}
+function showAlbum(on){if(on){if(!$('#mainView').hidden)mainY=scrollY}$('#mainView').hidden=on;$('#albumView').hidden=!on;if(on){renderAlbum();scrollTo(0,0)}else{scrollTo(0,mainY);requestAnimationFrame(()=>scrollTo(0,mainY))}}
 $('#openAlbum').onclick=()=>{albumPg=0;showAlbum(true);pushLayer('album')};$('#albumBack').onclick=()=>closeLayer(()=>showAlbum(false));
 $('#pgNext').onclick=()=>{albumPg++;renderAlbum();scrollTo(0,0)};$('#pgPrev').onclick=()=>{albumPg--;renderAlbum();scrollTo(0,0)};
 let lbEntry=null;function doCloseLb(){$('#lightbox').hidden=true;$('#lbConfirm').hidden=true;unlockScroll()}
@@ -1367,12 +1410,35 @@ function renderCal(){
   if(!es.length){const li=document.createElement('li');li.className='empty';li.textContent=tr('ביום הזה לא נרשם כלום.');ul.appendChild(li)}
   else es.forEach(e=>ul.appendChild(entryEl(e)));
 }
-function showCal(on){if(on){mainY=scrollY;const d=parse(today());calY=d.getFullYear();calM=d.getMonth();calSel=today()}
+function showCal(on){if(on){if(!$('#mainView').hidden)mainY=scrollY;const d=parse(today());calY=d.getFullYear();calM=d.getMonth();calSel=today()}
   $('#mainView').hidden=on;$('#calView').hidden=!on;if(on){renderCal();scrollTo(0,0)}else{scrollTo(0,mainY);requestAnimationFrame(()=>scrollTo(0,mainY))}}
 $('#openCal').onclick=()=>{showCal(true);pushLayer('cal')};
-function showDiary(on){if(on){mainY=scrollY;filter='all';document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.f==='all'))}
+function showDiary(on){if(on){if(!$('#mainView').hidden)mainY=scrollY;filter='all';document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.f==='all'))}
   $('#mainView').hidden=on;$('#diaryView').hidden=!on;render();if(on)scrollTo(0,0);else{scrollTo(0,mainY);requestAnimationFrame(()=>scrollTo(0,mainY))}}
 $('#openDiary').onclick=()=>{showDiary(true);pushLayer('diary')};$('#diaryBack').onclick=()=>closeLayer(()=>showDiary(false));$('#calBack').onclick=()=>closeLayer(()=>showCal(false));
+
+
+/* ---------- menu and settings ---------- */
+function showSettings(on){if(on&&!$('#mainView').hidden)mainY=scrollY;$('#mainView').hidden=on;$('#settingsView').hidden=!on;
+  if(on){renderSettings();scrollTo(0,0)}else{scrollTo(0,mainY);requestAnimationFrame(()=>scrollTo(0,mainY))}}
+function renderSettings(){if(!prof)return;$('#setKidVal').textContent=(prof.kid.name||'')+' · '+(LANG()==='en'?'English':'עברית');renderNotif()}
+const VIEWS={diary:['diaryView',v=>showDiary(v)],cal:['calView',v=>showCal(v)],album:['albumView',v=>{if(v)albumPg=0;showAlbum(v)}],settings:['settingsView',showSettings]};
+const curView=()=>Object.keys(VIEWS).find(k=>!$('#'+VIEWS[k][0]).hidden)||'main';
+function openMenu(){const s=curSnake();$('#menuSnake').textContent='';$('#menuSnake').appendChild(avatar(s));$('#menuName').textContent=fmt('החיים של {N}');
+  const cv=curView();document.querySelectorAll('.menu-item').forEach(b=>{if(b.dataset.go===cv)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+  $('#menu').hidden=false;$('#menuScrim').hidden=false;lockScroll();pushLayer('menu')}
+function doCloseMenu(){$('#menu').hidden=true;$('#menuScrim').hidden=true;unlockScroll()}
+function goTo(k){const cv=curView();
+  closeLayer(()=>{doCloseMenu();
+    if(k==='id'){openIdCard(false);return}
+    if(k===cv)return;
+    if(k==='main'){if(cv!=='main')closeLayer(()=>VIEWS[cv][1](false));return}
+    if(cv!=='main'){$('#'+VIEWS[cv][0]).hidden=true;$('#mainView').hidden=false}
+    VIEWS[k][1](true);if(cv==='main')pushLayer(k)})}
+$('#menuBtn').onclick=openMenu;$('#menuScrim').onclick=()=>closeLayer(doCloseMenu);
+document.querySelectorAll('.menu-item').forEach(b=>b.onclick=()=>goTo(b.dataset.go));
+$('#settingsBack').onclick=()=>closeLayer(()=>showSettings(false));
+$('#setKid').onclick=()=>startWizard('kid');$('#setId').onclick=()=>openIdCard(false);$('#setAdd').onclick=()=>startWizard('add');
 
 /* ---------- scroll lock, back button and the goodbye dialog ---------- */
 let lockY=0,locks=0;
@@ -1386,12 +1452,14 @@ function closeLayer(fn){if(histOK){pendingClose=fn;try{history.back();return}cat
 let pendingClose=null;
 function closeTop(){
   if(pendingClose){const f=pendingClose;pendingClose=null;f();return true}
+  if(!$('#menu').hidden){doCloseMenu();return true}
   if(!$('#idView').hidden){doCloseId();return true}
   if(!$('#lightbox').hidden){if(!$('#lbConfirm').hidden){$('#lbConfirm').hidden=true;if(histOK)pushLayer('photo');return true}doCloseLb();return true}
   if(!$('#sheet').hidden){doCloseSheet();return true}
   if(!$('#albumView').hidden){showAlbum(false);return true}
   if(!$('#calView').hidden){showCal(false);return true}
   if(!$('#diaryView').hidden){showDiary(false);return true}
+  if(!$('#settingsView').hidden){showSettings(false);return true}
   return false}
 const BYE=[
  {h:'סיימנו להיום?',p:'{N} {תחכה|יחכה} לך כאן, {מכורבלת|מכורבל} במחבוא {שלה|שלו}.'},
@@ -1475,7 +1543,7 @@ function renderNotif(){
 async function turnOn(){const ok=await askPermission();prof.notif={...nset(),on:ok};saveProf();renderNotif();
   if(ok){reschedule();hearts();toast(fmt('מעולה! {N} {תשלח|ישלח} לך הודעה מדי פעם'))}else toast('ההודעות כבויות בהגדרות הטלפון. אפשר להפעיל אותן שם.')}
 $('#naYes').onclick=turnOn;
-$('#naNo').onclick=()=>{prof.notif={...NOTIF_DEF,on:false};saveProf();renderNotif();toast('בסדר. אפשר להפעיל הודעות בתחתית המסך.')};
+$('#naNo').onclick=()=>{prof.notif={...NOTIF_DEF,on:false};saveProf();renderNotif();toast('בסדר. אפשר להפעיל הודעות בהגדרות, בתפריט.')};
 $('#nOn').onchange=e=>{if(e.target.checked)turnOn();else{prof.notif={...nset(),on:false};saveProf();renderNotif();reschedule()}};
 $('#nTest').onclick=async()=>{const L=LN();if(!L)return;if(!await askPermission()){toast('ההודעות כבויות בהגדרות הטלפון. אפשר להפעיל אותן שם.');return}
   try{await L.schedule({notifications:[{id:999,title:fmt('{N} {אומרת|אומר} שלום 👋'),body:tr('ככה ייראו ההודעות מהנחש.'),channelId:'snake',schedule:{at:new Date(Date.now()+3000),allowWhileIdle:true},extra:{kind:'test',snake:curId()}}]});toast('ההודעה תגיע בעוד כמה שניות')}catch(e){toast('לא הצלחתי לשלוח הודעה')}};

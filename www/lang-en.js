@@ -405,12 +405,19 @@ window.EN={
 "שלח הודעת ניסיון": "Send a test message",
 "מעולה! {N} {תשלח|ישלח} לך הודעה מדי פעם": "Great! {N} will send you a message now and then",
 "ההודעות כבויות בהגדרות הטלפון. אפשר להפעיל אותן שם.": "Messages are turned off in the phone's settings. You can turn them on there.",
-"בסדר. אפשר להפעיל הודעות בתחתית המסך.": "OK. You can turn on messages at the bottom of the screen.",
 "{N} {אומרת|אומר} שלום 👋": "{N} says hi 👋",
 "ככה ייראו ההודעות מהנחש.": "This is what messages from your snake look like.",
 "ההודעה תגיע בעוד כמה שניות": "The message will arrive in a few seconds",
 "לא הצלחתי לשלוח הודעה": "I couldn't send a message",
 "משימות (2 עד 3 בשבוע)": "Tasks (2–3 a week)",
 "לכל היומן (#1 רשומות) ←": "Whole diary (#1 entries) →",
-"לאחרונה ביומן של {N}": "Lately in {N}'s diary"
+"לאחרונה ביומן של {N}": "Lately in {N}'s diary",
+"תפריט": "Menu",
+"בית": "Home",
+"היומן": "Diary",
+"הגדרות": "Settings",
+"אני והנחשים שלי": "Me and my snakes",
+"השם שלי ושפת האפליקציה": "My name and app language",
+"הוספת נחש חדש": "Add a new snake",
+"בסדר. אפשר להפעיל הודעות בהגדרות, בתפריט.": "OK. You can turn on messages in Settings, in the menu."
 };
