@@ -322,6 +322,12 @@ textarea{min-height:110px;resize:vertical}
 .menu-item[aria-current="page"]{background:#EFE6C6}
 .set-rows{display:flex;flex-direction:column;gap:6px}
 .set-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border:2px solid var(--line);background:var(--chip);border-radius:16px;padding:12px 14px;font-size:1rem;text-align:start}
+.set-snakes{display:flex;flex-direction:column;gap:6px}
+.snake-row .sr-l{display:flex;align-items:center;gap:10px;min-width:0}
+.snake-row .sr-t{display:flex;flex-direction:column;min-width:0}
+.snake-row .sr-t b{font-family:var(--display);font-weight:400;font-size:1.1rem;color:var(--ink)}
+.snake-row .sr-t small{color:var(--muted)}
+.snake-row em{font-style:normal;color:var(--leaf);white-space:nowrap;font-size:.95rem}
 .set-row b{font-weight:400;color:var(--muted);white-space:nowrap}
 .section-title.small{font-size:1.15rem}
 
@@ -524,7 +530,7 @@ textarea{min-height:110px;resize:vertical}
     <h2 class="section-title small" data-t="אני והנחשים שלי">אני והנחשים שלי</h2>
     <div class="set-rows">
       <button type="button" class="set-row" id="setKid"><span data-t="השם שלי ושפת האפליקציה">השם שלי ושפת האפליקציה</span><b id="setKidVal"></b></button>
-      <button type="button" class="set-row" id="setId"><span data-t="תעודת הזהות של {N}">תעודת הזהות</span><b>›</b></button>
+      <div class="set-snakes" id="setSnakes"></div>
       <button type="button" class="set-row" id="setAdd"><span data-t="הוספת נחש חדש">הוספת נחש חדש</span><b>+</b></button>
     </div>
   </section>
@@ -1421,7 +1427,14 @@ $('#openDiary').onclick=()=>{showDiary(true);pushLayer('diary')};$('#diaryBack')
 /* ---------- menu and settings ---------- */
 function showSettings(on){if(on&&!$('#mainView').hidden)mainY=scrollY;$('#mainView').hidden=on;$('#settingsView').hidden=!on;
   if(on){renderSettings();scrollTo(0,0)}else{scrollTo(0,mainY);requestAnimationFrame(()=>scrollTo(0,mainY))}}
-function renderSettings(){if(!prof)return;$('#setKidVal').textContent=(prof.kid.name||'')+' · '+(LANG()==='en'?'English':'עברית');renderNotif()}
+function renderSettings(){if(!prof)return;$('#setKidVal').textContent=(prof.kid.name||'')+' · '+(LANG()==='en'?'English':'עברית');
+  const box=$('#setSnakes');box.textContent='';
+  prof.snakes.forEach(sn=>{const b=document.createElement('button');b.type='button';b.className='set-row snake-row';
+    const l=document.createElement('span');l.className='sr-l';l.appendChild(avatar(sn));const t=document.createElement('span');t.className='sr-t';
+    const nm=document.createElement('b');nm.textContent=sn.name;const sp=document.createElement('small');sp.textContent=snakeLabel(sn);t.append(nm,sp);l.appendChild(t);
+    const go=document.createElement('em');go.textContent=tr('תעודת זהות')+(LANG()==='en'?' →':' ←');b.append(l,go);
+    b.onclick=()=>{if(prof.cur!==sn.id){prof.cur=sn.id;saveProf();tipShown=null;render()}openIdCard(false)};box.appendChild(b)});
+  renderNotif()}
 const VIEWS={diary:['diaryView',v=>showDiary(v)],cal:['calView',v=>showCal(v)],album:['albumView',v=>{if(v)albumPg=0;showAlbum(v)}],settings:['settingsView',showSettings]};
 const curView=()=>Object.keys(VIEWS).find(k=>!$('#'+VIEWS[k][0]).hidden)||'main';
 function openMenu(){const s=curSnake();$('#menuSnake').textContent='';$('#menuSnake').appendChild(avatar(s));$('#menuName').textContent=fmt('החיים של {N}');
@@ -1438,7 +1451,7 @@ function goTo(k){const cv=curView();
 $('#menuBtn').onclick=openMenu;$('#menuScrim').onclick=()=>closeLayer(doCloseMenu);
 document.querySelectorAll('.menu-item').forEach(b=>b.onclick=()=>goTo(b.dataset.go));
 $('#settingsBack').onclick=()=>closeLayer(()=>showSettings(false));
-$('#setKid').onclick=()=>startWizard('kid');$('#setId').onclick=()=>openIdCard(false);$('#setAdd').onclick=()=>startWizard('add');
+$('#setKid').onclick=()=>startWizard('kid');$('#setAdd').onclick=()=>startWizard('add');
 
 /* ---------- scroll lock, back button and the goodbye dialog ---------- */
 let lockY=0,locks=0;
