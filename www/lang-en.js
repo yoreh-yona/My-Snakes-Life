@@ -410,5 +410,7 @@ window.EN={
 "ככה ייראו ההודעות מהנחש.": "This is what messages from your snake look like.",
 "ההודעה תגיע בעוד כמה שניות": "The message will arrive in a few seconds",
 "לא הצלחתי לשלוח הודעה": "I couldn't send a message",
-"משימות (2 עד 3 בשבוע)": "Tasks (2–3 a week)"
+"משימות (2 עד 3 בשבוע)": "Tasks (2–3 a week)",
+"לכל היומן (#1 רשומות) ←": "Whole diary (#1 entries) →",
+"לאחרונה ביומן של {N}": "Lately in {N}'s diary"
 };

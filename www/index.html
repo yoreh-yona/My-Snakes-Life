@@ -87,7 +87,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px soli
 .act.feed{--c:var(--tangerine)} .act.shed{--c:var(--grape)} .act.clean{--c:var(--sky)} .act.note{--c:var(--berry)}
 
 /* Diary */
-.filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.filters{display:flex;flex-wrap:wrap;gap:8px;padding-bottom:4px}
 .filters button,.chip{border:2px solid var(--surface);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:.95rem;white-space:nowrap}
 .filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .diary{display:flex;flex-direction:column;gap:10px;list-style:none;margin:0;padding:0}
@@ -312,6 +312,8 @@ textarea{min-height:110px;resize:vertical}
 .album-btn span{display:flex;flex-direction:column;min-width:0}
 .album-btn b{font-family:var(--display);font-weight:400;font-size:1.3rem}
 .album-btn small{font-size:.9rem;opacity:.92}
+.all-diary{align-self:center;border:none;background:var(--leaf);color:#fff;font-family:var(--display);font-size:1.1rem;padding:11px 22px;border-radius:58% 42% 55% 45% / 48% 58% 42% 52%;box-shadow:0 5px 0 rgba(0,0,0,.2)}
+.all-diary:active{transform:translateY(3px);box-shadow:0 2px 0 rgba(0,0,0,.2)}
 .album-add{display:grid;grid-template-columns:1fr 1.4fr;gap:10px}
 .album-add-btn{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;font-family:var(--display);font-size:1.05rem;padding:12px 10px;border-radius:58% 42% 55% 45% / 48% 58% 42% 52%;box-shadow:0 5px 0 rgba(0,0,0,.2);cursor:pointer;text-align:center;line-height:1.15}
 .album-add-btn.cam{background:var(--tangerine);color:#fff}.album-add-btn.gal{background:var(--berry)}
@@ -469,16 +471,9 @@ textarea{min-height:110px;resize:vertical}
   </section>
 
   <section style="display:flex;flex-direction:column;gap:12px">
-    <h2 class="section-title" data-t="היומן של {N}">היומן</h2>
-    <div class="filters" role="group" aria-label="סינון" data-ta="סינון">
-      <button aria-pressed="true" data-f="all"><span data-t="הכל">הכל</span></button>
-      <button aria-pressed="false" data-f="feed"><span data-t="ארוחות">ארוחות</span></button>
-      <button aria-pressed="false" data-f="shed"><span data-t="השלות">השלות</span></button>
-      <button aria-pressed="false" data-f="clean"><span data-t="ניקיון">ניקיון</span></button>
-      <button aria-pressed="false" data-f="note"><span data-t="יומן">יומן</span></button>
-      <button aria-pressed="false" data-f="bond"><span data-t="זמן ביחד">זמן ביחד</span></button>
-    </div>
+    <h2 class="section-title" data-t="לאחרונה ביומן של {N}">לאחרונה ביומן</h2>
     <ul class="diary" id="diary"></ul>
+    <button type="button" class="all-diary" id="openDiary"></button>
   </section>
   <p class="foot" id="foot"></p>
   <section class="backup notif-set" id="notifSet" hidden>
@@ -508,6 +503,21 @@ textarea{min-height:110px;resize:vertical}
   <div class="cal-card" id="calCard"></div>
   <div class="cal-legend"><span><i style="background:var(--tangerine)"></i><span data-t="ארוחה">ארוחה</span></span><span><i style="background:var(--grape)"></i><span data-t="השלה">השלה</span></span><span><i style="background:var(--sky)"></i><span data-t="ניקיון">ניקיון</span></span><span><i style="background:var(--berry)"></i><span data-t="יומן">יומן</span></span><span><i style="background:var(--leaf)"></i><span data-t="ביחד">ביחד</span></span></div>
   <section class="cal-day-list"><h3 class="day-title" id="dayTitle"></h3><ul class="diary" id="dayList"></ul></section>
+</div>
+<div id="diaryView" class="view" hidden>
+  <div class="album-head">
+    <button class="back" id="diaryBack"><span data-t="→ חזרה">→ חזרה</span></button>
+    <h2 class="section-title" data-t="היומן של {N}">היומן</h2>
+  </div>
+    <div class="filters" role="group" aria-label="סינון" data-ta="סינון">
+      <button aria-pressed="true" data-f="all"><span data-t="הכל">הכל</span></button>
+      <button aria-pressed="false" data-f="feed"><span data-t="ארוחות">ארוחות</span></button>
+      <button aria-pressed="false" data-f="shed"><span data-t="השלות">השלות</span></button>
+      <button aria-pressed="false" data-f="clean"><span data-t="ניקיון">ניקיון</span></button>
+      <button aria-pressed="false" data-f="note"><span data-t="יומן">יומן</span></button>
+      <button aria-pressed="false" data-f="bond"><span data-t="זמן ביחד">זמן ביחד</span></button>
+    </div>
+  <ul class="diary" id="diaryAll"></ul>
 </div>
 <div id="albumView" class="view" hidden>
   <div class="album-head">
@@ -976,14 +986,19 @@ function render(){
   $('#foot').textContent=bonds===1?fmt('בילית עם {N} פעם אחת. {היא מתרגלת|הוא מתרגל} אליך כל פעם יותר!'):bonds?fa('בילית עם {N} #1 פעמים. {היא מתרגלת|הוא מתרגל} אליך כל פעם יותר!',bonds):eaten?fa('עד עכשיו רשמת #1 ארוחות של {N}. כל הכבוד, {K}!',eaten):fmt('{N} {שמחה|שמח} [שאתה דואג|שאת דואגת] {לה|לו}.');
   applyTexts();renderNotif();reschedule();
 
-  const ul=$('#diary');ul.textContent='';
-  const list=mine().filter(e=>!(e.kind==='note'&&e.photo&&!e.text)&&(filter==='all'||e.kind===filter)).sort(sortFn);
+  const all=mine().filter(e=>!(e.kind==='note'&&e.photo&&!e.text)).sort(sortFn);
+  fillDiary($('#diary'),all.slice(0,RECENT),true);
+  const ob=$('#openDiary');ob.hidden=all.length<=RECENT;ob.textContent=fa('לכל היומן (#1 רשומות) ←',all.length);
+  if(!$('#diaryView').hidden)fillDiary($('#diaryAll'),all.filter(e=>filter==='all'||e.kind===filter),false);
+}
+const RECENT=5;
+function fillDiary(ul,list,recent){ul.textContent='';
   if(!list.length){const li=document.createElement('li');li.className='empty';
-    li.textContent=filter==='all'?fmt('היומן ריק. הרשומה הראשונה [שתוסיף|שתוסיפי] תופיע כאן.'):tr('אין עדיין רשומות מהסוג הזה.');ul.appendChild(li);return}
+    li.textContent=recent||filter==='all'?fmt('היומן ריק. הרשומה הראשונה [שתוסיף|שתוסיפי] תופיע כאן.'):tr('אין עדיין רשומות מהסוג הזה.');ul.appendChild(li);return}
   let lastMonth='';
   for(const e of list){
-    const m=parse(e.date).toLocaleDateString(LOC(),{month:'long',year:'numeric'});
-    if(m!==lastMonth){lastMonth=m;const mh=document.createElement('li');mh.className='month';mh.textContent=m;ul.appendChild(mh)}
+    if(!recent){const m=parse(e.date).toLocaleDateString(LOC(),{month:'long',year:'numeric'});
+      if(m!==lastMonth){lastMonth=m;const mh=document.createElement('li');mh.className='month';mh.textContent=m;ul.appendChild(mh)}}
     ul.appendChild(entryEl(e));
   }
 }
@@ -1354,7 +1369,10 @@ function renderCal(){
 }
 function showCal(on){if(on){mainY=scrollY;const d=parse(today());calY=d.getFullYear();calM=d.getMonth();calSel=today()}
   $('#mainView').hidden=on;$('#calView').hidden=!on;if(on){renderCal();scrollTo(0,0)}else{scrollTo(0,mainY);requestAnimationFrame(()=>scrollTo(0,mainY))}}
-$('#openCal').onclick=()=>{showCal(true);pushLayer('cal')};$('#calBack').onclick=()=>closeLayer(()=>showCal(false));
+$('#openCal').onclick=()=>{showCal(true);pushLayer('cal')};
+function showDiary(on){if(on){mainY=scrollY;filter='all';document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.f==='all'))}
+  $('#mainView').hidden=on;$('#diaryView').hidden=!on;render();if(on)scrollTo(0,0);else{scrollTo(0,mainY);requestAnimationFrame(()=>scrollTo(0,mainY))}}
+$('#openDiary').onclick=()=>{showDiary(true);pushLayer('diary')};$('#diaryBack').onclick=()=>closeLayer(()=>showDiary(false));$('#calBack').onclick=()=>closeLayer(()=>showCal(false));
 
 /* ---------- scroll lock, back button and the goodbye dialog ---------- */
 let lockY=0,locks=0;
@@ -1373,6 +1391,7 @@ function closeTop(){
   if(!$('#sheet').hidden){doCloseSheet();return true}
   if(!$('#albumView').hidden){showAlbum(false);return true}
   if(!$('#calView').hidden){showCal(false);return true}
+  if(!$('#diaryView').hidden){showDiary(false);return true}
   return false}
 const BYE=[
  {h:'סיימנו להיום?',p:'{N} {תחכה|יחכה} לך כאן, {מכורבלת|מכורבל} במחבוא {שלה|שלו}.'},
