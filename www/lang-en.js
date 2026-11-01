@@ -375,5 +375,9 @@ window.EN={
 "נטענו #1 רשומות מהגיבוי!": "Loaded #1 entries from the backup!",
 "הקובץ הזה לא נראה כמו גיבוי של היומן": "This file doesn't look like a diary backup",
 "יש לי גיבוי? טען אותו": "Have a backup? Load it",
-"נטענו #1 רשומות. עכשיו נשלים את הפרטים.": "Loaded #1 entries. Now let's fill in the details."
+"נטענו #1 רשומות. עכשיו נשלים את הפרטים.": "Loaded #1 entries. Now let's fill in the details.",
+"הוסף תמונות מהגלריה": "Add photos from gallery",
+"מוסיף #1 תמונות...": "Adding #1 photos...",
+"נוספו #1 תמונות לאלבום!": "Added #1 photos to the album!",
+"מוסיפים תמונות בכפתורים למעלה.": "Add photos with the buttons above."
 };
