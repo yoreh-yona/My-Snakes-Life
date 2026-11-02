@@ -11,17 +11,19 @@ permissions:
 jobs:
   apk:
     runs-on: ubuntu-latest
+    env:
+      HAS_UPLOAD_KEY: ${{ secrets.UPLOAD_KEYSTORE_BASE64 != '' }}
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
 
       - name: Install Capacitor
         run: npm install
@@ -43,6 +45,11 @@ jobs:
       - name: Copy the app into the project
         run: npx cap sync android
 
+      - name: Version number (grows with every build)
+        run: |
+          sed -i "s/versionCode 1$/versionCode ${{ github.run_number }}/; s/versionName \"1.0\"/versionName \"2.${{ github.run_number }}\"/" android/app/build.gradle
+          grep -n "versionCode\|versionName\|targetSdk" android/app/build.gradle android/variables.gradle || true
+
       - name: Use the project's signing key (so updates install over the old version)
         run: |
           KS="$GITHUB_WORKSPACE/android-signing/debug.keystore"
@@ -54,6 +61,18 @@ jobs:
         working-directory: android
         run: ./gradlew assembleDebug --no-daemon
 
+      - name: Store build (AAB) signed with the upload key
+        if: env.HAS_UPLOAD_KEY == 'true'
+        env:
+          UPLOAD_KEYSTORE_BASE64: ${{ secrets.UPLOAD_KEYSTORE_BASE64 }}
+          UPLOAD_KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSWORD }}
+        run: |
+          echo "$UPLOAD_KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/upload.jks"
+          sed -i "0,/^    signingConfigs {/s##    signingConfigs {\n        release {\n            storeFile file('$RUNNER_TEMP/upload.jks')\n            storePassword System.getenv('UPLOAD_KEYSTORE_PASSWORD')\n            keyAlias 'upload'\n            keyPassword System.getenv('UPLOAD_KEYSTORE_PASSWORD')\n        }#" android/app/build.gradle
+          sed -i "0,/^    buildTypes {/s##    buildTypes {\n        release {\n            signingConfig signingConfigs.release\n        }#" android/app/build.gradle
+          cd android && ./gradlew bundleRelease --no-daemon
+          cp app/build/outputs/bundle/release/app-release.aab ../my-snakes-life.aab
+
       - name: Name the APK and check its signature
         run: |
           cp android/app/build/outputs/apk/debug/app-debug.apk my-snakes-life.apk
@@ -64,6 +83,12 @@ jobs:
           name: my-snakes-life-apk
           path: my-snakes-life.apk
 
+      - uses: actions/upload-artifact@v4
+        if: ${{ hashFiles('my-snakes-life.aab') != '' }}
+        with:
+          name: my-snakes-life-aab-for-google-play
+          path: my-snakes-life.aab
+
       - name: Publish as a release (easy download from the phone)
         uses: softprops/action-gh-release@v2
         with:
@@ -72,5 +97,8 @@ jobs:
           body: |
             Android: download my-snakes-life.apk and open it on the phone.
             אנדרואיד: מורידים את my-snakes-life.apk ופותחים אותו בטלפון.
-          files: my-snakes-life.apk
+          files: |
+            my-snakes-life.apk
+            my-snakes-life.aab
+          fail_on_unmatched_files: false
           make_latest: true
