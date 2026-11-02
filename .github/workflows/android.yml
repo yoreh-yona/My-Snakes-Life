@@ -76,7 +76,8 @@ jobs:
       - name: Name the APK and check its signature
         run: |
           cp android/app/build/outputs/apk/debug/app-debug.apk my-snakes-life.apk
-          keytool -printcert -jarfile my-snakes-life.apk | grep "Piper Life"
+          BT=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -1)
+          $BT/apksigner verify --print-certs my-snakes-life.apk | grep "Piper Life"
 
       - uses: actions/upload-artifact@v4
         with:
