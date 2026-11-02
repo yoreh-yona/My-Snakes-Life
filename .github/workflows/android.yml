@@ -63,6 +63,7 @@ jobs:
 
       - name: Store build (AAB) signed with the upload key
         if: env.HAS_UPLOAD_KEY == 'true'
+        continue-on-error: true
         env:
           UPLOAD_KEYSTORE_BASE64: ${{ secrets.UPLOAD_KEYSTORE_BASE64 }}
           UPLOAD_KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSWORD }}
