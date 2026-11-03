@@ -1244,8 +1244,9 @@ let tt;function toast(m){const t=$('#toast');t.textContent=fmt(m);t.hidden=false
 document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openSheet(b.dataset.open));
 document.querySelectorAll('.filters button').forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));render()});
 
-const hour=new Date().getHours();
-function greet(){$('#greet').textContent=fmt(hour<12?'בוקר טוב {K}!':hour<18?'צהריים טובים {K}!':'ערב טוב {K}!')}
+/* read the clock on every call: Android keeps the app in memory for hours */
+function greet(){const h=new Date().getHours();$('#greet').textContent=fmt(h>=5&&h<12?'בוקר טוב {K}!':h>=12&&h<16?'צהריים טובים {K}!':'ערב טוב {K}!')}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&prof){greet();showTip()}});
 render();
 
 /* ---------- photo album ---------- */
