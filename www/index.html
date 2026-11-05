@@ -1249,7 +1249,13 @@ async function save(){
 
 let tt;function toast(m){const t=$('#toast');t.textContent=fmt(m);t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2400)}
 
-document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openSheet(b.dataset.open));
+/* tester diagnostics: show any error on screen so it can be photographed */
+function showErr(where,e){const t=$('#toast');t.textContent='⚠ '+where+': '+((e&&(e.message||e.reason&&e.reason.message))||e);t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,10000)}
+window.addEventListener('error',e=>showErr('JS',e.message+' @'+(e.lineno||'')));
+window.addEventListener('unhandledrejection',e=>showErr('async',e.reason&&e.reason.message||e.reason));
+document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{try{openSheet(b.dataset.open);
+  const r=$('#sheet').getBoundingClientRect();if($('#sheet').hidden||r.top>=innerHeight||r.bottom<=0)showErr('sheet',(($('#sheet').hidden)?'hidden':'off-screen '+Math.round(r.top)+'/'+innerHeight))}
+  catch(e){showErr(b.dataset.open,e)}});
 document.querySelectorAll('.filters button').forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));render()});
 
 /* read the clock on every call: Android keeps the app in memory for hours */
