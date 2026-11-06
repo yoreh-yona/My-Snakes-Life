@@ -254,6 +254,9 @@ textarea{min-height:110px;resize:vertical}
 .wiz-dots i.on{background:var(--leaf)}
 .wiz-body{display:flex;flex-direction:column;gap:12px}
 .wiz-body h2{font-size:1.7rem;text-align:center;color:#1F3328}
+.ios-hint p{margin:0;font-size:1.1rem}
+.ios-hint ol{margin:0;padding-inline-start:1.4em;display:flex;flex-direction:column;gap:10px;font-size:1.1rem}
+.ios-hint .wiz-skip{flex:none;font-size:.95rem}
 .wiz-hint{margin:0;text-align:center;color:#5A7266}
 .wiz-input{font:inherit;font-size:1.3rem;text-align:center;border:3px solid var(--line);border-radius:18px;padding:12px;background:#fff;color:#1F3328;width:100%}
 .wiz-input:focus{outline:none;border-color:var(--leaf)}
@@ -618,6 +621,12 @@ html[dir=ltr] .page::before{right:auto;left:10px}
 <div class="scrim" id="scrim" hidden></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" dir="rtl" hidden></div>
 <div class="toast" id="toast" hidden></div>
+<div class="wizard" id="iosHint" hidden>
+  <div class="wiz-card ios-hint" role="dialog" aria-modal="true">
+    <div class="wiz-body" id="iosHintBody"></div>
+    <button class="wiz-skip" id="iosHintGo" type="button"></button>
+  </div>
+</div>
 <div class="wizard" id="wizard" dir="rtl" hidden>
   <div class="wiz-card" role="dialog" aria-modal="true">
     <div class="wiz-dots" id="wizDots"></div>
@@ -1615,6 +1624,19 @@ $('#nTest').onclick=async()=>{const L=LN();if(!L)return;if(!await askPermission(
     if(ex.kind==='backup')setTimeout(()=>{goTo('settings');setTimeout(()=>{const b=$('#backupSet');b.scrollIntoView({behavior:'smooth',block:'center'});b.classList.add('flash');setTimeout(()=>b.classList.remove('flash'),1700)},500)},400)})}catch(e){}
   const A=Plug('App');if(A)try{A.addListener('resume',()=>reschedule())}catch(e){}})();
 
+/* ---------- first install on iPhone in a Safari tab: Safari and the home-screen icon keep separate data, so ask to add the icon first ---------- */
+function iosInSafari(){return IOS&&!NATIVE&&!navigator.standalone&&!(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)}
+function showIosHint(){
+  const he=(navigator.language||'').startsWith('he'),el=$('#iosHint');
+  const share='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" style="vertical-align:-4px"><path d="M12 3v12M8 7l4-4 4 4" fill="none" stroke="#1E7BD8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 11H5v10h14V11h-1" fill="none" stroke="#1E7BD8" stroke-width="2" stroke-linejoin="round"/></svg>';
+  el.dir=he?'rtl':'ltr';
+  $('#iosHintBody').innerHTML=he
+    ?'<h2>רגע לפני שמתחילים 🐍</h2><p>כדי שהיומן יישמר, מוסיפים את האפליקציה למסך הבית ופותחים אותה משם:</p><ol><li>לוחצים על כפתור השיתוף '+share+' בתחתית המסך</li><li>בוחרים <b>הוסף למסך הבית</b></li><li>לוחצים <b>הוסף</b></li><li>סוגרים את Safari ופותחים מהאייקון החדש</li></ol>'
+    :'<h2>One step before we start 🐍</h2><p>To keep your diary safe, add the app to your Home Screen and open it from there:</p><ol><li>Tap the Share button '+share+' at the bottom</li><li>Choose <b>Add to Home Screen</b></li><li>Tap <b>Add</b></li><li>Close Safari and open the new icon</li></ol>';
+  const go=$('#iosHintGo');go.textContent=he?'להמשיך בכל זאת ב־Safari':'Continue in Safari anyway';
+  go.onclick=()=>{el.hidden=true;unlockScroll();startWizard('new')};
+  el.hidden=false;lockScroll()}
+
 /* ---------- load from the phone ---------- */
 (async()=>{
   try{const v=await idbGet('entries');if(Array.isArray(v))entries=v;else{const old=lsLoad();if(old.length){entries=old;lsSave()}}}catch(e){entries=lsLoad()}
@@ -1624,7 +1646,7 @@ $('#nTest').onclick=async()=>{const L=LN();if(!L)return;if(!await askPermission(
     const id='s1';prof={kid:{name:'',g:'m'},snakes:[{id,name:'פייפר',species:'bp',sex:'f'}],cur:id};
     entries.forEach(e=>{if(!e.snake)e.snake=id});lsSave();saveProf();
     render();startWizard('migrate',{...prof.snakes[0]});return}
-  if(!prof){startWizard('new');return}
+  if(!prof){if(iosInSafari())showIosHint();else startWizard('new');return}
   render();setTimeout(()=>autoBackup({daily:true}),8000);
 })();
 
