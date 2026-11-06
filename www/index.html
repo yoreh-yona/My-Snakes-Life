@@ -1500,7 +1500,9 @@ function lockScroll(){if(locks++)return;lockY=scrollY;const b=document.body.styl
 function unlockScroll(){if(!locks||--locks)return;const b=document.body.style;b.position='';b.top='';b.left='';b.right='';b.overflow='';scrollTo(0,lockY)}
 const NATIVE=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
 const Plug=n=>window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins[n];
-let histOK=!NATIVE;
+// iPhone/iPad have no back button and a web app can't close itself: an edge swipe would show a blank page and an exit dialog that can't exit. Skip history there; screens close with their own buttons.
+const IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+let histOK=!NATIVE&&!IOS;
 function pushLayer(v){if(!histOK)return;try{history.pushState({v},'')}catch(e){histOK=false}}
 function closeLayer(fn){if(histOK){pendingClose=fn;try{history.back();return}catch(e){histOK=false}}fn()}
 let pendingClose=null;
