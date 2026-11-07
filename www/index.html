@@ -23,7 +23,7 @@ img{max-width:100%}
   --bg:#E6F5EC; --surface:#FFFFFF; --ink:#1F3328; --muted:#5A7266;
   --leaf:#2E9A68; --sun:#FFC83D; --tangerine:#FF7A3D; --berry:#E2457A; --sky:#2F9FD8; --grape:#8A5CD6;
   --scale:#C98A4B; --scale-dark:#6B4423; --belly:#F3D9A4;
-  --line:#CFE6D8; --chip:#EEF7F1; --shadow:0 4px 0 rgba(31,51,40,.12);
+  --line:#CFE6D8; --chip:#EEF7F1; --soft:#E9F8EE; --sw-off:#D5E4DA; --wiz-end:#B9E89A; --idc-a:#F4FFF0; --idc-b:#DDF3D2; --shadow:0 4px 0 rgba(31,51,40,.12);
   --sky-top:#8FD3FF; --sky-bottom:#D8F4FF; --sparkle:rgba(255,255,255,.55); --cloud:#FFFFFF; --face:#8A5A00; --hill-far:#9EDB8A; --hill:#6CC57A; --grass:#46A86A; --leaf-deco:#3E9C5F; --stem:#2E7D4F; --petal:#FF7AA8; --petal2:#B48CFF;
   --wood:#B8743A; --wood-dark:#7E4A1E; --wood-light:#E8AE6A; --fern:#3FA34D; --fern-dark:#2A7A38; --vine:#4E9A3A; --leafy:#68C46C; --snake-green:#7ED957; --snake-green-dark:#3F9A2E; --snake-yellow:#FFC93D; --snake-yellow-dark:#C98A1A; --eye:#1F3328;
 
@@ -60,6 +60,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px soli
 /* Status cards */
 .status{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .stat{background:var(--surface);border-radius:24px 30px 22px 28px / 28px 22px 30px 24px;padding:12px 8px;text-align:center;box-shadow:var(--shadow);border:2px solid var(--line);display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s}.stat:active{transform:scale(.95)}
 .stat .num{font-family:var(--display);font-size:2.2rem;line-height:1;font-variant-numeric:tabular-nums}
 .stat .lbl{font-size:.82rem;color:var(--muted)}
 .stat .what{font-size:.88rem;font-weight:700}
@@ -98,7 +99,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px soli
 .entry .title{font-weight:700}
 .entry .meta{font-size:.85rem;color:var(--muted)}
 .entry .text{margin-top:4px;overflow-wrap:anywhere;white-space:pre-wrap}
-.entry img{margin-top:8px;border-radius:14px;max-height:260px;object-fit:cover;width:100%}
+.entry img{margin-top:8px;border-radius:14px;max-height:260px;object-fit:cover;width:100%;cursor:zoom-in}
 .entry .del{border:none;background:none;color:var(--muted);font-size:.85rem;padding:4px}
 .entry .edit{color:var(--leaf);font-weight:700}
 .confirm{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;align-items:center;font-size:.9rem}
@@ -124,6 +125,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px soli
 .choices.big button.no[aria-pressed="true"]{background:var(--berry);border-color:var(--berry)}
 input[type=date],textarea{width:100%;font:inherit;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:16px;padding:10px 12px}
 textarea{min-height:110px;resize:vertical}
+.prey-other{width:100%;font:inherit;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:16px;padding:10px 12px}
+.prey-other:focus{outline:none;border-color:var(--leaf)}
 .photo-pick{position:relative;overflow:hidden;font:inherit;width:100%;cursor:pointer;min-height:64px;display:grid;place-items:center;border:2px dashed var(--line);background:var(--surface);border-radius:16px;padding:12px;text-align:center;color:var(--muted)}
 .photo-input{position:absolute;top:0;right:0;bottom:0;left:0;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:100px}
 .photo-pick:focus-within{outline:3px solid var(--sky);outline-offset:2px}
@@ -151,7 +154,7 @@ textarea{min-height:110px;resize:vertical}
 .na-actions .ghost{background:#fff;color:#1F3328;border:2px solid #BFE3F5;box-shadow:none}
 .sw-row{display:flex;align-items:center;gap:10px;font-size:1rem;cursor:pointer;padding:4px 0}
 .sw-row.main{font-family:var(--display);font-size:1.1rem}
-.sw-row input{appearance:none;-webkit-appearance:none;width:46px;height:28px;border-radius:999px;background:#D5E4DA;position:relative;flex:none;cursor:pointer;transition:background .2s;margin:0}
+.sw-row input{appearance:none;-webkit-appearance:none;width:46px;height:28px;border-radius:999px;background:var(--sw-off);position:relative;flex:none;cursor:pointer;transition:background .2s;margin:0}
 .sw-row input::after{content:"";position:absolute;top:3px;right:3px;inset-inline-start:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:inset-inline-start .2s,right .2s,left .2s}
 .sw-row input:checked{background:var(--leaf)}
 .sw-row input:checked::after{right:21px;inset-inline-start:21px}
@@ -231,7 +234,7 @@ textarea{min-height:110px;resize:vertical}
 /* Snake switcher */
 .snakes{display:flex;flex-wrap:wrap;gap:8px;padding:2px 2px 6px;margin-top:-8px}
 .snake-chip{display:flex;align-items:center;gap:8px;flex:none;border:3px solid var(--surface);background:var(--surface);border-radius:999px;padding-block:4px;padding-inline:6px 14px;font-family:var(--display);font-size:1.05rem;box-shadow:var(--shadow)}
-.snake-chip.on{border-color:var(--leaf);background:#E9F8EE}
+.snake-chip.on{border-color:var(--leaf);background:var(--soft)}
 .snake-chip.add{background:rgba(255,255,255,.75);border-style:dashed;border-color:var(--leaf);color:var(--leaf)}
 .avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;display:grid;place-items:center;flex:none;box-shadow:inset 0 0 0 2px rgba(255,255,255,.7)}
 .avatar img{width:100%;height:100%;object-fit:cover}
@@ -247,7 +250,7 @@ textarea{min-height:110px;resize:vertical}
 .id-btn{display:inline-flex;align-items:center;gap:6px;border:2px solid rgba(255,255,255,.7);background:rgba(255,255,255,.15);color:#fff;border-radius:999px;padding:5px 12px;font-size:.92rem}
 .id-btn svg{width:22px;height:22px}
 /* Wizard */
-.wizard{position:fixed;top:0;right:0;bottom:0;left:0;inset:0;z-index:50;display:grid;place-items:center;background:linear-gradient(180deg,#FFF7CF,#B9E89A);padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));overflow-y:auto}
+.wizard{position:fixed;top:0;right:0;bottom:0;left:0;inset:0;z-index:50;display:grid;place-items:center;background:linear-gradient(180deg,#FFF7CF,var(--wiz-end));padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));overflow-y:auto}
 .wiz-card{width:min(100%,440px);background:#FFFDF4;border:4px solid #FFD84D;border-radius:34px 44px 30px 40px / 40px 30px 44px 34px;padding:22px 18px;box-shadow:0 10px 0 rgba(120,90,20,.2);display:flex;flex-direction:column;gap:16px;color:#1F3328}
 .wiz-dots{display:flex;gap:6px;justify-content:center}
 .wiz-dots i{width:10px;height:10px;border-radius:50%;background:#E3DCC2}
@@ -262,11 +265,11 @@ textarea{min-height:110px;resize:vertical}
 .wiz-input:focus{outline:none;border-color:var(--leaf)}
 .wiz-choices{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .wiz-choices button{flex:1;min-width:110px;border:3px solid var(--line);background:#fff;border-radius:22px;padding:16px 10px;font-family:var(--display);font-size:1.3rem}
-.wiz-choices button[aria-pressed="true"],.wiz-species button[aria-pressed="true"]{border-color:var(--leaf);background:#E9F8EE}
+.wiz-choices button[aria-pressed="true"],.wiz-species button[aria-pressed="true"]{border-color:var(--leaf);background:var(--soft)}
 .wiz-species{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .wiz-species button{display:flex;align-items:center;gap:8px;border:3px solid var(--line);background:#fff;border-radius:18px;padding:8px 10px;font-size:1.02rem;text-align:start}
 .wiz-species .sw{width:30px;height:30px;border-radius:50%;flex:none}
-.wiz-date{text-align:center;font-family:var(--display);font-size:1.15rem;background:#E9F8EE;border-radius:14px;padding:6px}
+.wiz-date{text-align:center;font-family:var(--display);font-size:1.15rem;background:var(--soft);border-radius:14px;padding:6px}
 .wiz-today{align-self:center;border:none;background:var(--tangerine);color:#fff;font-family:var(--display);font-size:1.3rem;padding:10px 28px;border-radius:58% 42% 55% 45% / 48% 58% 42% 52%;box-shadow:0 5px 0 rgba(0,0,0,.2)}
 .bdp{display:flex;flex-direction:column;gap:8px}
 .bdp-q{font-size:.95rem;color:#5A7266;text-align:center}
@@ -289,7 +292,7 @@ textarea{min-height:110px;resize:vertical}
 .idview-inner{width:min(100%,420px);display:flex;flex-direction:column;gap:12px;align-items:stretch}
 .idview h2{color:#fff;text-align:center;font-size:1.6rem;text-shadow:0 2px 4px rgba(0,0,0,.4)}
 .idcard{position:relative;overflow:hidden;border-radius:22px;color:#1F3328;box-shadow:0 12px 26px rgba(0,0,0,.35);
-  background:radial-gradient(circle at 85% 20%,rgba(255,255,255,.6) 0 40px,transparent 41px),repeating-linear-gradient(45deg,rgba(46,154,104,.06) 0 8px,transparent 8px 16px),linear-gradient(160deg,#F4FFF0,#DDF3D2)}
+  background:radial-gradient(circle at 85% 20%,rgba(255,255,255,.6) 0 40px,transparent 41px),repeating-linear-gradient(45deg,rgba(46,154,104,.06) 0 8px,transparent 8px 16px),linear-gradient(160deg,var(--idc-a),var(--idc-b))}
 .idc-head{background:var(--leaf);color:#fff;padding:10px 16px;display:flex;flex-direction:column}
 .idc-head span{font-family:var(--display);font-size:1.4rem;line-height:1.1}
 .idc-head small{opacity:.85;font-size:.8rem}
@@ -328,7 +331,11 @@ textarea{min-height:110px;resize:vertical}
 .menu-item:nth-of-type(1) svg{background:var(--leaf)}.menu-item:nth-of-type(2) svg{background:var(--berry)}.menu-item:nth-of-type(3) svg{background:var(--sky)}
 .menu-item:nth-of-type(4) svg{background:var(--tangerine)}.menu-item:nth-of-type(5) svg{background:var(--grape)}.menu-item:nth-of-type(6) svg{background:#8E5A2C}
 .menu-item[aria-current="page"]{background:#EFE6C6}
+.menu-exit{margin-top:6px;border-top:2px dashed #E3DCC2;border-radius:0 0 16px 16px}.menu-exit svg{background:#7A8B82!important}
 .set-rows{display:flex;flex-direction:column;gap:6px}
+.tints{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;padding:4px 0}
+.tints button{width:52px;height:52px;border-radius:50%;border:4px solid #fff;box-shadow:0 0 0 2px var(--line);cursor:pointer;display:grid;place-items:center;color:#fff;font-size:1.4rem;-webkit-tap-highlight-color:transparent}
+.tints button[aria-checked="true"]{box-shadow:0 0 0 3px var(--ink)}
 .set-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border:2px solid var(--line);background:var(--chip);border-radius:16px;padding:12px 14px;font-size:1rem;text-align:start}
 .set-snakes{display:flex;flex-direction:column;gap:6px}
 .snake-row .sr-l{display:flex;align-items:center;gap:10px;min-width:0}
@@ -399,6 +406,7 @@ textarea{min-height:110px;resize:vertical}
 .lb-cap{color:#fff;font-family:var(--hand);font-size:1.8rem;text-align:center;max-width:36ch}
 .lb-close{border:none;background:#fff;color:#1F3328;border-radius:999px;padding:10px 24px;font-family:var(--display)}
 .lb-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;color:#fff}
+.lb-share{display:inline-flex;align-items:center;gap:6px;border:none;background:var(--leaf);color:#fff;border-radius:999px;padding:10px 20px;font-family:var(--display)}
 .lb-del{border:2px solid rgba(255,255,255,.6);background:none;color:#fff;border-radius:999px;padding:8px 18px}
 .lb-yes{border:none;background:var(--berry);color:#fff;border-radius:999px;padding:10px 20px;font-family:var(--display)}
 
@@ -455,6 +463,7 @@ html[dir=ltr] .page::before{right:auto;left:10px}
 <nav class="menu" id="menu" dir="rtl" hidden aria-label="תפריט" data-ta="תפריט">
   <div class="menu-head"><span class="menu-snake" id="menuSnake"></span><b id="menuName"></b></div>
   <button type="button" class="menu-item" data-go="main"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg><span data-t="בית">בית</span></button><button type="button" class="menu-item" data-go="diary"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M6 3h11a2 2 0 012 2v16H8a2 2 0 01-2-2zM9 8h7M9 12h7M9 16h4" stroke="rgba(0,0,0,.35)" stroke-width="1.6"/></svg><span data-t="היומן">היומן</span></button><button type="button" class="menu-item" data-go="cal"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M4 6h16v15H4zM4 10h16M8 3v5M16 3v5" stroke="rgba(0,0,0,.35)" stroke-width="1.6"/></svg><span data-t="לוח השנה">לוח השנה</span></button><button type="button" class="menu-item" data-go="album"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M3 6h18v14H3z"/><path d="M5 18l5-6 4 4 2-2 4 4z" fill="rgba(0,0,0,.35)"/></svg><span data-t="אלבום התמונות">אלבום התמונות</span></button><button type="button" class="menu-item" data-go="id"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M3 6h18v13H3z"/><circle cx="8.5" cy="12" r="2.4" fill="rgba(0,0,0,.35)"/><path d="M13 10h5M13 14h4" stroke="rgba(0,0,0,.35)" stroke-width="1.6"/></svg><span data-t="תעודת זהות">תעודת זהות</span></button><button type="button" class="menu-item" data-go="settings"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 8a4 4 0 100 8 4 4 0 000-8z" fill="rgba(0,0,0,.35)"/><path d="M12 2l2 3 3.5-.5.5 3.5 3 2-2 3 .5 3.5-3.5.5-2 3-2-3-3.5-.5.5-3.5-2-3 3-2 .5-3.5L10 5z"/></svg><span data-t="הגדרות">הגדרות</span></button>
+  <button type="button" class="menu-item menu-exit" id="menuExit" hidden><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M10 8l-4 4 4 4M6 12h10"/></svg><span data-t="יציאה מהאפליקציה">יציאה מהאפליקציה</span></button>
 </nav>
 <div class="app" dir="rtl">
 <div id="mainView" class="view">
@@ -489,9 +498,9 @@ html[dir=ltr] .page::before{right:auto;left:10px}
 
   <section aria-label="מצב עכשיו" data-ta="מצב עכשיו">
     <div class="status">
-      <div class="stat feed"><span class="lbl"><span data-t="ימים מאז">ימים מאז</span></span><span class="num" id="dFeed">–</span><span class="what"><span data-t="ארוחה">ארוחה</span></span></div>
-      <div class="stat shed"><span class="lbl"><span data-t="ימים מאז">ימים מאז</span></span><span class="num" id="dShed">–</span><span class="what"><span data-t="השלת עור">השלת עור</span></span></div>
-      <div class="stat clean"><span class="lbl"><span data-t="ימים מאז">ימים מאז</span></span><span class="num" id="dClean">–</span><span class="what"><span data-t="ניקיון">ניקיון</span></span></div>
+      <button type="button" class="stat feed" data-open="feed"><span class="lbl"><span data-t="ימים מאז">ימים מאז</span></span><span class="num" id="dFeed">–</span><span class="what"><span data-t="ארוחה">ארוחה</span></span></button>
+      <button type="button" class="stat shed" data-open="shed"><span class="lbl"><span data-t="ימים מאז">ימים מאז</span></span><span class="num" id="dShed">–</span><span class="what"><span data-t="השלת עור">השלת עור</span></span></button>
+      <button type="button" class="stat clean" data-open="clean"><span class="lbl"><span data-t="ימים מאז">ימים מאז</span></span><span class="num" id="dClean">–</span><span class="what"><span data-t="ניקיון">ניקיון</span></span></button>
     </div>
   </section>
   <div class="hint" id="hint"></div>
@@ -549,6 +558,10 @@ html[dir=ltr] .page::before{right:auto;left:10px}
       <div class="set-snakes" id="setSnakes"></div>
       <button type="button" class="set-row" id="setAdd"><span data-t="הוספת נחש חדש">הוספת נחש חדש</span><b>+</b></button>
     </div>
+  </section>
+  <section class="backup">
+    <h2 class="section-title small" data-t="צבע האפליקציה">צבע האפליקציה</h2>
+    <div class="tints" id="tints" role="radiogroup" aria-label="צבע האפליקציה" data-ta="צבע האפליקציה"></div>
   </section>
   <section class="backup notif-set" id="notifSet" hidden>
     <h2 class="section-title" id="nsTitle"></h2>
@@ -611,7 +624,7 @@ html[dir=ltr] .page::before{right:auto;left:10px}
   <div class="lb-stage" id="lbStage"><img id="lbImg" alt="" draggable="false"></div>
   <div class="lb-cap" id="lbCap"></div>
   <div class="lb-zoom"><button type="button" id="lbIn" aria-label="הגדל" data-ta="הגדל">+</button><button type="button" id="lbFit"><span data-t="גודל רגיל">גודל רגיל</span></button><button type="button" id="lbOut" aria-label="הקטן" data-ta="הקטן">−</button></div>
-  <div class="lb-actions"><button class="lb-close" id="lbClose" type="button"><span data-t="סגור">סגור</span></button><button class="lb-del" id="lbDel" type="button"><span data-t="מחק מהאלבום">מחק מהאלבום</span></button></div>
+  <div class="lb-actions"><button class="lb-close" id="lbClose" type="button"><span data-t="סגור">סגור</span></button><button class="lb-share" id="lbShare" type="button"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="18" cy="5" r="2.6" fill="currentColor"/><circle cx="6" cy="12" r="2.6" fill="currentColor"/><circle cx="18" cy="19" r="2.6" fill="currentColor"/><path d="M8.3 10.8l7.4-4.4M8.3 13.2l7.4 4.4" stroke="currentColor" stroke-width="2" fill="none"/></svg><span data-t="שתף">שתף</span></button><button class="lb-del" id="lbDel" type="button"><span data-t="מחק מהאלבום">מחק מהאלבום</span></button></div>
   <div class="lb-confirm" id="lbConfirm" hidden><div class="lb-confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="lbAsk">
     <h3 id="lbAsk"></h3><p><span data-t="התמונה תימחק מהאלבום, ואי אפשר להחזיר אותה.">התמונה תימחק מהאלבום, ואי אפשר להחזיר אותה.</span></p>
     <div class="lb-confirm-actions"><button class="lb-yes" id="lbYes" type="button"><span data-t="כן, למחוק">כן, למחוק</span></button><button class="lb-no" id="lbNo" type="button"><span data-t="לא, להשאיר">לא, להשאיר</span></button></div>
@@ -693,7 +706,7 @@ entries=[];
 /* ---------- profile: the child and their snakes ---------- */
 const SPECIES=[
  {k:'bp',n:'פיתון מתכדרר',c:['#C98A4B','#6B4423','#F3D9A4']},
- {k:'corn',n:'קרחן תירס',c:['#E8743B','#B33A2B','#F7E3C4']},
+ {k:'corn',n:'כרכן תירס',c:['#E8743B','#B33A2B','#F7E3C4']},
  {k:'king',n:'נחש מלך',c:['#33302E','#F2EFE6','#F2EFE6']},
  {k:'milk',n:'נחש חלב',c:['#D8382E','#1F1F1F','#F6D35B']},
  {k:'hog',n:'הוגנוז',c:['#C9A46A','#7A5A32','#EBDDBA']},
@@ -747,7 +760,7 @@ function bigDatePicker(val,onPick){
     if(crumbs.children.length)box.appendChild(crumbs);
     const g=document.createElement('div');
     if(y===null){const lbl=document.createElement('div');lbl.className='bdp-q';lbl.textContent=tr('באיזו שנה?');box.appendChild(lbl);g.className='bdp-grid y';
-      for(let yy=t.getFullYear();yy>=t.getFullYear()-11;yy--)g.appendChild(mk(String(yy),()=>{y=yy;draw()}))}
+      for(let yy=t.getFullYear();yy>=2000;yy--)g.appendChild(mk(String(yy),()=>{y=yy;draw()}))}
     else if(m===null){const lbl=document.createElement('div');lbl.className='bdp-q';lbl.textContent=tr('באיזה חודש?');box.appendChild(lbl);g.className='bdp-grid m';
       MON().forEach((mn,i)=>{const b=mk(mn,()=>{m=i;draw()});if(y===t.getFullYear()&&i>t.getMonth())b.disabled=true;g.appendChild(b)})}
     else{const lbl=document.createElement('div');lbl.className='bdp-q';lbl.textContent=tr('באיזה יום?');box.appendChild(lbl);
@@ -948,17 +961,17 @@ const TIPS=[
  T('הצפע המצוי הוא הנחש הארסי הנפוץ בישראל. כשרואים נחש בטבע לא נוגעים בו, מתרחקים וקוראים למבוגר.',0),
  T('לפעמים נחשים אוהבים לשכב בתוך קערת המים, במיוחד לפני השלת עור.',0),
  /* ---- corn snake ---- */
- T('קרחן תירס מגיע מדרום מזרח ארצות הברית. הוא לא ארסי, ולוחץ על הטרף כמו פיתון.',0,'corn'),
- T('למה "קרחן תירס"? הבטן שלו מנוקדת בריבועים שחורים ולבנים שנראים כמו גרגירים של תירס צבעוני. ויש אומרים שזה כי מצאו אותו ליד מחסני תירס, שם הוא צד עכברים.',0,'corn'),
- T('קרחני תירס הם מטפסים טובים. הם יודעים לטפס על ענפים ועל קירות של כלוב.',0,'corn'),
- T('קרחני תירס ידועים כאמני בריחה. הם מוצאים כל חריץ קטן ודוחפים את הראש החוצה.',0,'corn'),
- T('קרחן תירס בוגר מגיע בדרך כלל לאורך של מטר עד מטר וחצי.',0,'corn'),
- T('קרחן תירס יכול לחיות 15 עד 20 שנה, ואפילו יותר.',0,'corn'),
- T('נקבת קרחן תירס מטילה בדרך כלל בין 10 ל־30 ביצים. הגורים בוקעים אחרי חודשיים בערך.',0,'corn'),
- T('קרחני תירס פעילים בעיקר בשעות הדמדומים: עם הזריחה ולפני השקיעה.',0,'corn'),
- T('לקרחן תירס יש מאות מופעים. "אמלנסטי" הוא קרחן בלי צבע שחור, ו"סנואו" הוא כמעט לבן לגמרי.',0,'corn'),
- T('בטבע קרחן תירס אוכל עכברים, ולפעמים גם ציפורים קטנות וביצים.',0,'corn'),
- T('[בדוק|בדקי] היום שהמכסה של הבית של {N} סגור היטב. קרחני תירס יודעים לברוח מכל חריץ!',1,'corn'),
+ T('כרכן תירס מגיע מדרום מזרח ארצות הברית. הוא לא ארסי, ולוחץ על הטרף כמו פיתון.',0,'corn'),
+ T('למה "כרכן תירס"? הבטן שלו מנוקדת בריבועים שחורים ולבנים שנראים כמו גרגירים של תירס צבעוני. ויש אומרים שזה כי מצאו אותו ליד מחסני תירס, שם הוא צד עכברים.',0,'corn'),
+ T('כרכני תירס הם מטפסים טובים. הם יודעים לטפס על ענפים ועל קירות של כלוב.',0,'corn'),
+ T('כרכני תירס ידועים כאמני בריחה. הם מוצאים כל חריץ קטן ודוחפים את הראש החוצה.',0,'corn'),
+ T('כרכן תירס בוגר מגיע בדרך כלל לאורך של מטר עד מטר וחצי.',0,'corn'),
+ T('כרכן תירס יכול לחיות 15 עד 20 שנה, ואפילו יותר.',0,'corn'),
+ T('נקבת כרכן תירס מטילה בדרך כלל בין 10 ל־30 ביצים. הגורים בוקעים אחרי חודשיים בערך.',0,'corn'),
+ T('כרכני תירס פעילים בעיקר בשעות הדמדומים: עם הזריחה ולפני השקיעה.',0,'corn'),
+ T('לכרכן תירס יש מאות מופעים. "אמלנסטי" הוא כרכן בלי צבע שחור, ו"סנואו" הוא כמעט לבן לגמרי.',0,'corn'),
+ T('בטבע כרכן תירס אוכל עכברים, ולפעמים גם ציפורים קטנות וביצים.',0,'corn'),
+ T('[בדוק|בדקי] היום שהמכסה של הבית של {N} סגור היטב. כרכני תירס יודעים לברוח מכל חריץ!',1,'corn'),
  T('[הסתכל|הסתכלי] על {N} {כשהיא מטפסת|כשהוא מטפס}. [נסה|נסי] לספור כמה פעמים {היא עולה|הוא עולה} על הענף בחמש דקות.',1,'corn'),
  /* ---- king snake ---- */
  T('נחש המלך נקרא כך כי הוא אוכל גם נחשים אחרים, אפילו נחשי רעשן. לחלקם יש עמידות לארס שלהם.',0,'king'),
@@ -1043,7 +1056,21 @@ let filter='all', confirmId=null;
 function lastOf(kind,pred){return mine().filter(e=>e.kind===kind&&(!pred||pred(e))).sort(sortFn)[0]}
 function sortFn(a,b){return a.date<b.date?1:a.date>b.date?-1:(b.created||0)-(a.created||0)}
 function setNum(id,e){$(id).textContent=e?diffDays(e.date):'–'}
-function render(){
+/* app color: the default theme in another hue. Snakes keep their own colors */
+const TINTS=[['green','ירוק','#2E9A68'],['teal','טורקיז','#1B8A8F'],['blue','כחול','#2E6FC6'],['purple','סגול','#7A52C7'],['pink','ורוד','#C83F7C'],['orange','כתום','#C65A1E']];
+const TINT_BASE={'--bg':'#E6F5EC','--line':'#CFE6D8','--chip':'#EEF7F1','--muted':'#5A7266','--soft':'#E9F8EE','--sw-off':'#D5E4DA','--wiz-end':'#B9E89A','--idc-a':'#F4FFF0','--idc-b':'#DDF3D2'};
+function hexHsl(x){let r=parseInt(x.slice(1,3),16)/255,g=parseInt(x.slice(3,5),16)/255,b=parseInt(x.slice(5,7),16)/255;const M=Math.max(r,g,b),m=Math.min(r,g,b),l=(M+m)/2;let h=0,s=0;
+  if(M!==m){const d=M-m;s=l>.5?d/(2-M-m):d/(M+m);h=M===r?(g-b)/d+(g<b?6:0):M===g?(b-r)/d+2:(r-g)/d+4;h*=60}return [h,s,l]}
+const hsl=(h,s,l)=>`hsl(${h.toFixed(0)} ${(s*100).toFixed(0)}% ${(l*100).toFixed(1)}%)`;
+let tintNow=null;
+function applyTint(){const k=(prof&&prof.tint)||'green';if(k===tintNow)return;tintNow=k;const t=TINTS.find(x=>x[0]===k)||TINTS[0],st=document.documentElement.style;
+  if(t[0]==='green'){Object.keys(TINT_BASE).concat('--leaf').forEach(v=>st.removeProperty(v))}
+  else{const hue=hexHsl(t[2])[0];st.setProperty('--leaf',t[2]);for(const [v,x] of Object.entries(TINT_BASE)){const [,s,l]=hexHsl(x);st.setProperty(v,hsl(hue,s,l))}}
+  const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=t[2];renderTints()}
+function renderTints(){const box=$('#tints');if(!box)return;box.textContent='';const cur=(prof&&prof.tint)||'green';
+  TINTS.forEach(([k,n,c])=>{const b=document.createElement('button');b.type='button';b.style.background=c;b.setAttribute('role','radio');b.setAttribute('aria-checked',k===cur);b.setAttribute('aria-label',tr(n));b.title=tr(n);if(k===cur)b.textContent='✓';
+    b.onclick=()=>{if(!prof)return;prof.tint=k;saveProf();applyTint()};box.appendChild(b)})}
+function render(){applyTint();
   if(!prof)return;
   const lf=lastOf('feed',e=>e.ate!==false), ls=lastOf('shed'), lc=lastOf('clean');
   setNum('#dFeed',lf);setNum('#dShed',ls);setNum('#dClean',lc);
@@ -1088,7 +1115,7 @@ function entryEl(e){
     const meta=document.createElement('div');meta.className='meta';meta.textContent=nice(e.date);
     body.append(t,meta);
     if(e.text){const p=document.createElement('div');p.className='text';p.textContent=e.text;body.appendChild(p)}
-    if(e.photo){const img=document.createElement('img');img.alt=fmt('תמונה של {N}');img.loading='lazy';img.src=photoSrc(e.photo);body.appendChild(img)}
+    if(e.photo){const img=document.createElement('img');img.alt=fmt('תמונה של {N}');img.loading='lazy';img.src=photoSrc(e.photo);img.className='entry-photo';img.tabIndex=0;img.setAttribute('role','button');img.onclick=()=>openLb(e,img.src);img.onkeydown=k=>{if(k.key==='Enter')openLb(e,img.src)};body.appendChild(img)}
     if(confirmId===e.id){const c=document.createElement('div');c.className='confirm';
       const s=document.createElement('span');s.textContent=tr('למחוק את זה?');
       const y=document.createElement('button');y.className='yes';y.textContent=tr('כן, למחוק');y.onclick=async()=>{confirmId=null;try{await store.remove(e.id);toast('נמחק')}catch(err){toast('לא הצלחתי למחוק. נסה שוב.')};render()};
@@ -1102,10 +1129,12 @@ function entryEl(e){
 const canEdit=e=>!!e.created&&Date.now()-e.created<86400000;
 const FEM={'קטן':'קטנה','בינוני':'בינונית','גדול':'גדולה'};
 const sizeWord=(sz,prey)=>prey==='חולדה'?(FEM[sz]||sz):sz;
-function preyPhrase(e){const p=e.prey||'';if(LANG()!=='en')return p+(e.size?' '+sizeWord(e.size,p):'');
-  const pe=tr(p),se=e.size?tr(e.size):'';if(!pe)return se;const w=(se?se+' ':'')+pe;return (/^[aeiou]/i.test(w)?'an ':'a ')+w.toLowerCase().replace(/^(\w)/,c=>c)}
+const preyOwn=e=>e.prey==='משהו אחר'&&(e.preyOther||'').trim()?e.preyOther.trim():'';
+const preyName=e=>preyOwn(e)||tr(e.prey||'');
+function preyPhrase(e){const own=preyOwn(e),p=own||e.prey||'';if(LANG()!=='en')return p+(e.size?' '+sizeWord(e.size,p):'');
+  const pe=own||tr(p),se=e.size?tr(e.size):'';if(!pe)return se;if(own)return (se?se+' ':'')+own;const w=(se?se+' ':'')+pe;return (/^[aeiou]/i.test(w)?'an ':'a ')+w.toLowerCase().replace(/^(\w)/,c=>c)}
 function describe(e){
-  if(e.kind==='feed'){ if(e.ate===false) return fmt('{N} לא {רצתה|רצה} לאכול')+(e.prey?' ('+tr(e.prey)+')':'');
+  if(e.kind==='feed'){ if(e.ate===false) return fmt('{N} לא {רצתה|רצה} לאכול')+(e.prey?' ('+preyName(e)+')':'');
     return fa('{N} {אכלה|אכל} #1',preyPhrase(e)) }
   if(e.kind==='shed') return tr(e.whole===false?'השלת עור בחתיכות':'השלת עור שלמה');
   if(e.kind==='bond') return fmt('זמן ביחד עם {N}');
@@ -1189,8 +1218,11 @@ function openSheet(kind,existing){
     const preyRow=choiceRow('prey',['עכבר','חולדה','אוגר','אפרוח','משהו אחר']);
     const sizeRow=choiceRow('size',['קטן','בינוני','גדול']);
     const fixSizes=()=>[...sizeRow.children].forEach((b,i)=>{b.textContent=tr(sizeWord(['קטן','בינוני','גדול'][i],form.prey))});
-    preyRow.addEventListener('click',()=>setTimeout(fixSizes,0));fixSizes();
-    s.appendChild(question(fmt('מה הגשנו {לה|לו}?'),preyRow));
+    const other=document.createElement('input');other.type='text';other.className='prey-other';other.maxLength=40;other.placeholder=tr('מה זה היה?');other.setAttribute('aria-label',tr('מה זה היה?'));other.value=form.preyOther||'';
+    other.oninput=()=>{form.preyOther=other.value};
+    const showOther=()=>{const on=form.prey==='משהו אחר';const was=other.hidden;other.hidden=!on;if(on&&was)setTimeout(()=>other.focus(),50)};other.hidden=true;
+    preyRow.addEventListener('click',()=>setTimeout(()=>{fixSizes();showOther()},0));fixSizes();showOther();
+    const pq=question(fmt('מה הגשנו {לה|לו}?'),preyRow);pq.appendChild(other);s.appendChild(pq);
     s.appendChild(question('באיזה גודל?',sizeRow));
     s.appendChild(question(fmt('{היא אכלה|הוא אכל}?'),choiceRow('ate',[[true,fmt('כן, {אכלה|אכל}!')],[false,fmt('לא {רצתה|רצה}'),'no']],{big:true})));
   }
@@ -1208,7 +1240,7 @@ function openSheet(kind,existing){
     if(kind==='note') s.appendChild(dateQ('באיזה יום?'));
     s.appendChild(question(kind==='note'?'ספר מה ראית:':'עוד משהו לספר?',ta,'f-text'));
   }
-  if(kind==='note'){
+  if(kind!=='bond'){
     const box=document.createElement('div');box.style.display='flex';box.style.flexDirection='column';box.style.gap='8px';
     const prev=document.createElement('img');prev.className='photo-preview';prev.hidden=!form.photo;prev.alt='';if(form.photo)prev.src=photoSrc(form.photo);
     const row=document.createElement('div');row.className='photo-row';
@@ -1241,7 +1273,7 @@ async function save(){
   const e=editing?{id:editing.id,kind:editing.kind,date:form.date,created:editing.created,edited:Date.now()}
     :{id:'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),kind:form.kind,date:form.date,created:Date.now()};
   if(editing&&editing.photo)e.photo=editing.photo;
-  if(form.kind==='feed'){e.prey=form.prey;if(form.size)e.size=form.size;e.ate=form.ate}
+  if(form.kind==='feed'){e.prey=form.prey;if(form.prey==='משהו אחר'&&(form.preyOther||'').trim())e.preyOther=form.preyOther.trim();if(form.size)e.size=form.size;e.ate=form.ate}
   if(form.kind==='shed')e.whole=form.whole;
   if(form.kind==='clean')e.tasks=form.tasks;
   if((form.text||'').trim())e.text=form.text.trim();
@@ -1275,7 +1307,9 @@ render();
 /* ---------- photo album ---------- */
 const PER=6,TAPES=['#FF8FB0','#FFD84D','#7FD3F7','#B9E27A','#C9A6FF','#FFB067'];let albumPg=0;
 const hash=str=>{let h=0;for(const c of str)h=(h*31+c.charCodeAt(0))|0;return Math.abs(h)};
-function photos(){return mine().filter(e=>e.photo).sort(sortFn)}
+function photos(){const l=mine().filter(e=>e.photo).sort(sortFn),s=curSnake();
+  /* the ID-card photo opens the album, like a cover */
+  if(s&&s.photo)l.unshift({id:'profile-'+s.id,kind:'profile',date:s.joined||today(),photo:s.photo,snake:s.id});return l}
 function updateAlbumCount(){const n=photos().length;$('#albumCount').textContent=n===1?fmt('תמונה אחת של {N}'):n?fa('#1 תמונות של {N}',n):fmt('כאן יופיעו התמונות של {N}')}
 function pageArt(i){let seed=i*97+13;const r=()=>(seed=(seed*9301+49297)%233280)/233280;
   const leaf=(x,y,a,sc,f)=>`<g transform="translate(${x} ${y}) rotate(${a}) scale(${sc})"><path d="M0 0 C10 -14 36 -14 50 0 C36 14 10 14 0 0Z" fill="${f}"/><path d="M3 0 H46" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/></g>`;
@@ -1321,7 +1355,7 @@ function renderAlbum(){
   $('#pgLabel').textContent=(albumPg+1)+' / '+pages;$('#pgPrev').disabled=albumPg===0;$('#pgNext').disabled=albumPg>=pages-1;
   $('#albumNav').hidden=pages<2;
 }
-function caption(e,full){const d=parse(e.date).toLocaleDateString(LOC(),full?{day:'numeric',month:'long',year:'numeric'}:{day:'numeric',month:'numeric',year:'2-digit'});
+function caption(e,full){if(e.kind==='profile')return fmt('תמונת הפרופיל של {N}');const d=parse(e.date).toLocaleDateString(LOC(),full?{day:'numeric',month:'long',year:'numeric'}:{day:'numeric',month:'numeric',year:'2-digit'});
   if(!e.text)return d;const t=full||e.text.length<=40?e.text:e.text.slice(0,38)+'…';return d+' · '+t}
 /* add photos straight to the album: one or many at once, saved right away */
 async function addPhotos(files){
@@ -1368,8 +1402,20 @@ function pEnd(ev){const p=ptrs.get(ev.pointerId);ptrs.delete(ev.pointerId);
 stage.addEventListener('pointerup',pEnd);stage.addEventListener('pointercancel',pEnd);
 stage.addEventListener('wheel',ev=>{ev.preventDefault();const p=rel(ev);zAt(Z.s*(ev.deltaY<0?1.2:1/1.2),p[0],p[1])},{passive:false});
 $('#lbIn').onclick=()=>zAt(Z.s*1.6,0,0,true);$('#lbOut').onclick=()=>zAt(Z.s/1.6,0,0,true);$('#lbFit').onclick=()=>zAt(1,0,0,true);
-function openLb(e,src){lbEntry=e;Z.s=1;Z.x=0;Z.y=0;lbImg.src=src;lbImg.alt=fmt('תמונה של {N}');zApply();$('#lbCap').textContent=caption(e,true);$('#lbConfirm').hidden=true;$('#lightbox').hidden=false;lockScroll();pushLayer('photo')}
+function openLb(e,src){lbEntry=e;Z.s=1;Z.x=0;Z.y=0;lbImg.src=src;lbImg.alt=fmt('תמונה של {N}');zApply();$('#lbCap').textContent=caption(e,true);$('#lbConfirm').hidden=true;$('#lbDel').hidden=e.kind==='profile';$('#lightbox').hidden=false;lockScroll();pushLayer('photo')}
 $('#lbClose').onclick=()=>closeLayer(doCloseLb);
+/* share the open photo with the phone's own share sheet */
+const blobB64=b=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(String(r.result).split(',')[1]);r.onerror=no;r.readAsDataURL(b)});
+$('#lbShare').onclick=async()=>{const e=lbEntry;if(!e)return;
+  try{const blob=await (await fetch(lbImg.src)).blob();const ext=/png/.test(blob.type)?'png':'jpg';
+    const name=('snake-'+(e.date||today())+'-'+(e.id||'')).replace(/[^\w-]/g,'')+'.'+ext,text=fmt('{N} 🐍');
+    if(NATIVE&&Plug('Filesystem')&&Plug('Share')){
+      const r=await Plug('Filesystem').writeFile({path:name,data:await blobB64(blob),directory:'CACHE'});
+      await Plug('Share').share({title:text,files:[r.uri],dialogTitle:tr('לשתף את התמונה')});return}
+    const file=new File([blob],name,{type:blob.type||'image/jpeg'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:text});return}
+    const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=name;document.body.appendChild(a);a.click();a.remove();toast('התמונה נשמרה בהורדות');
+  }catch(x){const m=String(x&&(x.message||x.name)||'');if(/abort|cancel/i.test(m))return;toast('לא הצלחתי לשתף. נסה שוב.')}};
 $('#lbDel').onclick=()=>{$('#lbAsk').textContent=fmt('[אתה בטוח|את בטוחה]?');$('#lbConfirm').hidden=false;setTimeout(()=>$('#lbNo').focus(),50)};$('#lbNo').onclick=()=>{$('#lbConfirm').hidden=true};
 $('#lbYes').onclick=async()=>{const e=lbEntry;if(!e)return;try{
     if(e.text||e.kind!=='note'){const c={...e};delete c.photo;await store.add(c)}else await store.remove(e.id);
@@ -1485,7 +1531,7 @@ function goTo(k){const cv=curView();
     if(cv!=='main'){$('#'+VIEWS[cv][0]).hidden=true;$('#mainView').hidden=false}
     VIEWS[k][1](true);if(cv==='main')pushLayer(k)})}
 $('#menuBtn').onclick=openMenu;$('#menuScrim').onclick=()=>closeLayer(doCloseMenu);
-document.querySelectorAll('.menu-item').forEach(b=>b.onclick=()=>goTo(b.dataset.go));
+document.querySelectorAll('.menu-item[data-go]').forEach(b=>b.onclick=()=>goTo(b.dataset.go));
 /* swipe the menu back toward its edge to close it */
 (function(){const m=$('#menu'),sc=$('#menuScrim');let x0,y0,t0,dx=0,mode=null;
   const sign=()=>getComputedStyle(m).direction==='rtl'?1:-1;
@@ -1509,6 +1555,8 @@ function lockScroll(){if(locks++)return;lockY=scrollY;const b=document.body.styl
 function unlockScroll(){if(!locks||--locks)return;const b=document.body.style;b.position='';b.top='';b.left='';b.right='';b.overflow='';scrollTo(0,lockY)}
 const NATIVE=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
 const Plug=n=>window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins[n];
+/* exit: Android only. A web app on iPhone can't close itself, so the button stays hidden there */
+if(NATIVE){$('#menuExit').hidden=false;$('#menuExit').onclick=()=>closeLayer(()=>{doCloseMenu();showBye()})}
 // iPhone/iPad have no back button and a web app can't close itself: an edge swipe would show a blank page and an exit dialog that can't exit. Skip history there; screens close with their own buttons.
 const IOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 let histOK=!NATIVE&&!IOS;
