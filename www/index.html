@@ -1702,7 +1702,9 @@ function showIosHint(){
 function backupJson(){return JSON.stringify({app:'piper-life',version:2,exported:new Date().toISOString(),profile:prof,entries})}
 function markShared(){if(!prof)return;prof.lastBk=today();saveProf();reschedule()}
 /* automatic copy on the phone: Documents/MySnakesLife, written when the app goes to the background, at most once a day */
-const AB_DIR='MySnakesLife';
+let AB_DIR='MySnakesLife';
+/* the GitHub test app (id ...mysnakeslife.dev) keeps its backups in its own folder, so it never touches the store app's backup */
+(function(){const A=NATIVE&&Plug('App');if(A&&A.getInfo)A.getInfo().then(i=>{if(i&&/\.dev$/.test(i.id||''))AB_DIR='MySnakesLife-test'}).catch(()=>{})})();
 async function autoBackup(opt){opt=opt||{};const F=NATIVE&&Plug('Filesystem');if(!F||!prof)return;
   const ab=prof.autoBk||{};if(ab.off&&!opt.now)return;
   if(!opt.now&&(ab.day===today()||(!dirty&&!opt.daily)))return;
@@ -1720,8 +1722,8 @@ function renderAutoBk(){const show=!!(NATIVE&&Plug('Filesystem')&&prof);$('#auto
   const st=$('#abStatus');st.classList.toggle('bad',ab.ok===false);
   if(ab.off)st.textContent=tr('כבוי. כדאי להשאיר אותו פעיל.');
   else if(ab.ok===false)st.textContent=tr('הגיבוי האוטומטי לא הצליח. נסו "עדכן עכשיו".');
-  else if(ab.at){const d=new Date(ab.at);st.textContent=fa('נשמר לאחרונה: #1, #2. הקובץ נמצא בתיקייה Documents/MySnakesLife בטלפון.',longDate(ymd(d)),pad(d.getHours())+':'+pad(d.getMinutes()))}
-  else st.textContent=tr('הגיבוי יישמר בפעם הבאה שתצאו מהאפליקציה, בתיקייה Documents/MySnakesLife בטלפון.')}
+  else if(ab.at){const d=new Date(ab.at);st.textContent=fa('נשמר לאחרונה: #1, #2. הקובץ נמצא בתיקייה Documents/MySnakesLife בטלפון.',longDate(ymd(d)),pad(d.getHours())+':'+pad(d.getMinutes())).replace('MySnakesLife',AB_DIR)}
+  else st.textContent=tr('הגיבוי יישמר בפעם הבאה שתצאו מהאפליקציה, בתיקייה Documents/MySnakesLife בטלפון.').replace('MySnakesLife',AB_DIR)}
 $('#abOn').onchange=e=>{prof.autoBk={...(prof.autoBk||{}),off:!e.target.checked};saveProf();renderAutoBk();if(e.target.checked)autoBackup({now:true})};
 $('#abNow').onclick=()=>autoBackup({now:true});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')autoBackup()});

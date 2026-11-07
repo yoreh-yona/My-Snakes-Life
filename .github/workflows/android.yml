@@ -45,6 +45,19 @@ jobs:
       - name: Copy the app into the project
         run: npx cap sync android
 
+      - name: GitHub APK is a separate test app (own id and name), so it installs next to the store version
+        run: |
+          # Only the debug build (the GitHub APK) changes. The store build (AAB, release) keeps com.yorehyona.mysnakeslife.
+          sed -i "0,/^    buildTypes {/s##    buildTypes {\n        debug {\n            applicationIdSuffix '.dev'\n        }#" android/app/build.gradle
+          D=android/app/src/debug/res
+          mkdir -p $D/values $D/values-iw $D/values-b+he
+          printf '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <string name="app_name">My Snake%s Life 🧪</string>\n    <string name="title_activity_main">My Snake%s Life 🧪</string>\n</resources>\n' "\\'" "\\'" > $D/values/strings.xml
+          for q in values-iw values-b+he; do
+            printf '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <string name="app_name">החיים של הנחש שלי 🧪</string>\n    <string name="title_activity_main">החיים של הנחש שלי 🧪</string>\n</resources>\n' > $D/$q/strings.xml
+          done
+          grep -n -A3 "^    buildTypes {" android/app/build.gradle
+          cat $D/values/strings.xml
+
       - name: Version number (grows with every build)
         run: |
           sed -i "s/versionCode 1$/versionCode ${{ github.run_number }}/; s/versionName \"1.0\"/versionName \"2.${{ github.run_number }}\"/" android/app/build.gradle
@@ -82,6 +95,12 @@ jobs:
           cp android/app/build/outputs/apk/debug/app-debug.apk my-snakes-life.apk
           BT=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -1)
           $BT/apksigner verify --print-certs my-snakes-life.apk | grep "Piper Life"
+          echo "APK (test app):"; $BT/aapt2 dump badging my-snakes-life.apk | grep -E "^package:|application-label" | head -3
+          $BT/aapt2 dump badging my-snakes-life.apk | grep -q "name='com.yorehyona.mysnakeslife.dev'"
+          if [ -f my-snakes-life.aab ]; then
+            echo "AAB (store) package:"; unzip -p my-snakes-life.aab base/manifest/AndroidManifest.xml | strings | grep -o "com\.yorehyona\.mysnakeslife[.a-z]*" | sort -u
+            if unzip -p my-snakes-life.aab base/manifest/AndroidManifest.xml | strings | grep -q "mysnakeslife\.dev"; then echo "STORE BUILD MUST NOT BE .dev"; exit 1; fi
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
@@ -100,8 +119,9 @@ jobs:
           tag_name: v2.${{ github.run_number }}
           name: My Snake's Life · החיים של הנחש שלי 2.${{ github.run_number }}
           body: |
-            Android: download my-snakes-life.apk and open it on the phone.
-            אנדרואיד: מורידים את my-snakes-life.apk ופותחים אותו בטלפון.
+            my-snakes-life.apk = test app "My Snake's Life 🧪". It installs next to the Google Play version and keeps its own data.
+            my-snakes-life.apk = אפליקציית בדיקה "החיים של הנחש שלי 🧪". מותקנת ליד גרסת החנות, עם נתונים נפרדים.
+            my-snakes-life.aab = for Google Play only / לחנות בלבד.
           files: |
             my-snakes-life.apk
             my-snakes-life.aab
