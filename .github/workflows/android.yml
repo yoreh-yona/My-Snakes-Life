@@ -51,7 +51,7 @@ jobs:
           sed -i "0,/^    buildTypes {/s##    buildTypes {\n        debug {\n            applicationIdSuffix '.dev'\n        }#" android/app/build.gradle
           D=android/app/src/debug/res
           mkdir -p $D/values $D/values-iw $D/values-b+he
-          printf '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <string name="app_name">My Snake%s Life 🧪</string>\n    <string name="title_activity_main">My Snake%s Life 🧪</string>\n</resources>\n' "\\'" "\\'" > $D/values/strings.xml
+          printf '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <string name="app_name">My Snake%ss Life 🧪</string>\n    <string name="title_activity_main">My Snake%ss Life 🧪</string>\n</resources>\n' "\\'" "\\'" > $D/values/strings.xml
           for q in values-iw values-b+he; do
             printf '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <string name="app_name">החיים של הנחש שלי 🧪</string>\n    <string name="title_activity_main">החיים של הנחש שלי 🧪</string>\n</resources>\n' > $D/$q/strings.xml
           done
